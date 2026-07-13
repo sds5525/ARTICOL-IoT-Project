@@ -3304,3 +3304,347 @@ button {
     grid-template-columns: 1fr;
   }
 }
+/* ---------- STEP 20: CORRELATION ENGINE ---------- */
+
+.correlation-panel {
+  padding: 20px;
+  border: 1px solid rgba(128, 168, 212, 0.12);
+  border-radius: 18px;
+  background:
+    linear-gradient(
+      145deg,
+      rgba(15, 32, 54, 0.96),
+      rgba(8, 22, 39, 0.96)
+    );
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
+}
+
+.correlation-panel.active {
+  border-color: rgba(255, 181, 70, 0.25);
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.18),
+    0 0 30px rgba(255, 181, 70, 0.05);
+}
+
+.correlation-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.correlation-header h2 {
+  margin: 5px 0 0;
+  font-size: 19px;
+}
+
+.correlation-state {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 10px;
+  border-radius: 999px;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+}
+
+.correlation-state i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 10px currentColor;
+}
+
+.correlation-state.normal {
+  border: 1px solid rgba(76, 221, 157, 0.22);
+  background: rgba(76, 221, 157, 0.07);
+  color: #5be3a5;
+}
+
+.correlation-state.active {
+  border: 1px solid rgba(255, 183, 73, 0.28);
+  background: rgba(255, 183, 73, 0.08);
+  color: #ffbd58;
+  animation: correlation-alert-pulse 1.6s infinite;
+}
+
+.correlation-flow {
+  display: grid;
+  grid-template-columns:
+    minmax(150px, 1fr)
+    90px
+    minmax(150px, 1fr)
+    90px
+    minmax(150px, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+
+.correlation-node {
+  min-height: 145px;
+  padding: 14px;
+  border: 1px solid rgba(122, 158, 198, 0.12);
+  border-radius: 13px;
+  background: rgba(68, 104, 145, 0.05);
+  text-align: center;
+}
+
+.correlation-node.safe {
+  border-color: rgba(76, 221, 157, 0.22);
+}
+
+.correlation-node.warning {
+  border-color: rgba(255, 183, 73, 0.32);
+  background: rgba(255, 183, 73, 0.055);
+}
+
+.correlation-node.critical {
+  border-color: rgba(255, 79, 99, 0.38);
+  background: rgba(255, 79, 99, 0.06);
+}
+
+.correlation-node-top {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.correlation-node-top strong {
+  color: #d6e5f5;
+  font-size: 11px;
+}
+
+.correlation-gallery-id {
+  display: grid;
+  width: 25px;
+  height: 25px;
+  place-items: center;
+  border: 1px solid rgba(104, 163, 225, 0.24);
+  border-radius: 7px;
+  background: rgba(64, 123, 185, 0.09);
+  color: #87bced;
+  font-size: 10px;
+  font-weight: 900;
+}
+
+.correlation-node-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  margin: 12px auto 9px;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(77, 126, 181, 0.09);
+  color: #8dc1ef;
+  font-size: 21px;
+}
+
+.correlation-node.warning .correlation-node-icon {
+  background: rgba(255, 183, 73, 0.11);
+  color: #ffbe59;
+  animation: sensor-ring-soft-pulse 1.6s infinite;
+}
+
+.correlation-node > span {
+  display: block;
+  color: #a4b8ce;
+  font-size: 10px;
+}
+
+.correlation-node > small {
+  display: block;
+  margin-top: 5px;
+  color: #657e9a;
+  font-size: 8px;
+}
+
+.correlation-link {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.correlation-link span {
+  height: 1px;
+  flex: 1;
+  background: rgba(108, 151, 197, 0.18);
+}
+
+.correlation-link strong {
+  color: #58728f;
+  font-size: 7px;
+  letter-spacing: 0.7px;
+  white-space: nowrap;
+}
+
+.correlation-link.active span {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 183, 73, 0.15),
+    #ffb84b,
+    rgba(255, 183, 73, 0.15)
+  );
+}
+
+.correlation-link.active strong {
+  color: #ffbd58;
+}
+
+.correlation-result {
+  display: grid;
+  grid-template-columns: 42px 1fr auto;
+  align-items: center;
+  gap: 13px;
+  margin-top: 16px;
+  padding: 13px;
+  border: 1px solid rgba(111, 156, 205, 0.12);
+  border-radius: 12px;
+  background: rgba(63, 108, 158, 0.055);
+}
+
+.correlation-result-icon {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 11px;
+  background: rgba(255, 183, 73, 0.1);
+  color: #ffbd58;
+  font-size: 19px;
+}
+
+.correlation-result span {
+  color: #6d91b7;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 0.8px;
+}
+
+.correlation-result strong {
+  display: block;
+  margin-top: 4px;
+  color: #cbdced;
+  font-size: 11px;
+}
+
+.correlation-result p {
+  margin: 4px 0 0;
+  color: #7188a3;
+  font-size: 9px;
+  line-height: 1.45;
+}
+
+.correlation-confidence {
+  min-width: 78px;
+  padding: 9px;
+  border-radius: 10px;
+  background: rgba(60, 108, 157, 0.08);
+  text-align: center;
+}
+
+.correlation-confidence span,
+.correlation-confidence strong {
+  display: block;
+}
+
+.correlation-confidence span {
+  color: #677f9a;
+  font-size: 8px;
+}
+
+.correlation-confidence strong {
+  margin-top: 4px;
+  color: #90c4f2;
+  font-size: 18px;
+}
+
+@keyframes correlation-alert-pulse {
+  50% {
+    box-shadow: 0 0 18px rgba(255, 183, 73, 0.22);
+  }
+}
+
+@keyframes sensor-ring-soft-pulse {
+  50% {
+    box-shadow: 0 0 20px rgba(255, 183, 73, 0.18);
+    transform: scale(1.04);
+  }
+}
+
+@media (max-width: 900px) {
+  .correlation-flow {
+    grid-template-columns: 1fr;
+  }
+
+  .correlation-link {
+    min-height: 34px;
+    flex-direction: column;
+  }
+
+  .correlation-link span {
+    width: 1px;
+    min-height: 10px;
+  }
+}
+
+@media (max-width: 600px) {
+  .correlation-header,
+  .correlation-result {
+    align-items: flex-start;
+    grid-template-columns: 1fr;
+  }
+
+  .correlation-header {
+    flex-direction: column;
+  }
+
+  .correlation-confidence {
+    width: 100%;
+  }
+}
+/* ---------- STEP 21: CLOSE MAIN COLUMN GAP ---------- */
+
+.dashboard-workspace {
+  width: 100%;
+  grid-template-columns: minmax(0, 2.25fr) minmax(360px, 1fr);
+  gap: 18px;
+  align-items: start;
+  justify-content: stretch;
+}
+
+.dashboard-main-column,
+.dashboard-side-column,
+.museum-map-panel,
+.environment-panel {
+  width: 100%;
+  min-width: 0;
+}
+
+.dashboard-main-column {
+  justify-self: stretch;
+}
+
+.dashboard-side-column {
+  justify-self: stretch;
+}
+
+/* Ensure the map panel fills its complete grid track */
+.museum-map-panel {
+  max-width: none;
+  margin: 0;
+}
+
+/* Keep the right column aligned closely with the map */
+.dashboard-side-column {
+  margin: 0;
+}
+
+@media (max-width: 1150px) {
+  .dashboard-workspace {
+    grid-template-columns: 1fr;
+  }
+}

@@ -3,7 +3,6 @@ import Header from "../components/Header";
 import Gauge from "../components/Gauge";
 import MuseumMap from "../components/MuseumMap";
 import ManualControls from "../components/ManualControls";
-import CorrelationEngine from "../components/CorrelationEngine";
 import { museumData } from "../data/dummyData";
 
 function Dashboard({ onOpenGallery }) {
@@ -227,7 +226,6 @@ function Dashboard({ onOpenGallery }) {
               galleries={galleries}
               onOpenGallery={onOpenGallery}
             />
-            <CorrelationEngine galleries={galleries} />
 
             <section className="live-event-panel">
               <div className="panel-heading">

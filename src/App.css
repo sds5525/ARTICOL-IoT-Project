@@ -3304,20 +3304,7 @@ button {
     grid-template-columns: 1fr;
   }
 }
-/* ---------- STEP 20: CORRELATION ENGINE ---------- */
 
-.correlation-panel {
-  padding: 20px;
-  border: 1px solid rgba(128, 168, 212, 0.12);
-  border-radius: 18px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(15, 32, 54, 0.96),
-      rgba(8, 22, 39, 0.96)
-    );
-  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.18);
-}
 
 .correlation-panel.active {
   border-color: rgba(255, 181, 70, 0.25);

@@ -1,7 +1,7 @@
 export const museumData = {
     project: {
       name: "ARTICOL",
-      subtitle: "Artifact Intelligence & Threat Correlation Operations Layer",
+      subtitle: "Smart Museum Security & Threat Correlation System",
       location: "Bengaluru, India",
       mode: "DEMO MODE",
     },

@@ -60,7 +60,7 @@ function Dashboard({ onOpenGallery }) {
         gallery.id === "C"
           ? {
               ...gallery,
-              accessMode: restricted ? "RESTRICTED" : "PUBLIC",
+              accessMode: restricted ? "RESTRICTED" : "STANDARD",
             }
           : gallery,
       ),
@@ -90,7 +90,7 @@ function Dashboard({ onOpenGallery }) {
           gallery.id === "C"
             ? galleryCRestricted
               ? "RESTRICTED"
-              : "PUBLIC"
+              : "STANDARD"
             : gallery.accessMode,
       })),
     );
@@ -114,14 +114,14 @@ function Dashboard({ onOpenGallery }) {
         <section className="dashboard-intro">
           <div>
             <p className="small-label">
-              CENTRAL SECURITY OVERVIEW
+              CENTRAL ARCHIVE SECURITY OVERVIEW
             </p>
 
-            <h2>Real-Time Museum Operations</h2>
+            <h2>Real-Time Artifact Archive Operations</h2>
 
             <p>
-              Monitoring protected artifacts, gallery access and
-              environmental conditions.
+              Monitoring protected artifacts, archive-zone access,
+              environmental conditions and correlated security events.
             </p>
           </div>
 
@@ -144,13 +144,13 @@ function Dashboard({ onOpenGallery }) {
 
             <p>
               {overallStatus === "SAFE" &&
-                "Normal security conditions"}
+                "Normal archive security conditions"}
 
               {overallStatus === "WARNING" &&
-                "Suspicious activity requires monitoring"}
+                "Suspicious archive activity requires monitoring"}
 
               {overallStatus === "CRITICAL" &&
-                "Immediate operator response required"}
+                "Immediate archive-security response required"}
             </p>
           </div>
         </section>
@@ -178,9 +178,19 @@ function Dashboard({ onOpenGallery }) {
             <span className="summary-card-icon">👥</span>
 
             <div>
-              <p>Visitors Inside</p>
-              <h3>{museumData.system.visitorCount}</h3>
-              <small>Current museum occupancy</small>
+              <p>Authorized Occupancy</p>
+
+              <h3>
+                {museumData.system.occupancyCount}
+
+                <small className="occupancy-limit">
+                  /{museumData.system.maximumOccupancy}
+                </small>
+              </h3>
+
+              <small>
+                Personnel currently inside the archive
+              </small>
             </div>
           </article>
 
@@ -205,16 +215,16 @@ function Dashboard({ onOpenGallery }) {
             </span>
 
             <div>
-              <p>Gallery C Access</p>
+              <p>Vault C Access</p>
 
               <h3 className="gallery-mode-text">
-                {galleryCRestricted ? "RESTRICTED" : "PUBLIC"}
+                {galleryCRestricted ? "RESTRICTED" : "STANDARD"}
               </h3>
 
               <small>
                 {galleryCRestricted
-                  ? "Authorized personnel only"
-                  : "Open to museum visitors"}
+                  ? "Authorized archive personnel only"
+                  : "Standard archive access enabled"}
               </small>
             </div>
           </article>
@@ -234,7 +244,7 @@ function Dashboard({ onOpenGallery }) {
                     LIVE EVENT STREAM
                   </p>
 
-                  <h2>System Activity</h2>
+                  <h2>Archive System Activity</h2>
                 </div>
 
                 <span className="stream-status">
@@ -268,7 +278,7 @@ function Dashboard({ onOpenGallery }) {
               <div className="panel-heading">
                 <div>
                   <p className="small-label">DEVICE NETWORK</p>
-                  <h2>ESP32 Controllers</h2>
+                  <h2>Archive Zone Controllers</h2>
                 </div>
 
                 <span className="controller-count">
@@ -305,7 +315,7 @@ function Dashboard({ onOpenGallery }) {
                       </strong>
 
                       <p>
-                        ESP32-{gallery.id} · Sensor gateway
+                        ESP32-{gallery.id} · Archive sensor gateway
                       </p>
                     </div>
 
@@ -334,7 +344,7 @@ function Dashboard({ onOpenGallery }) {
                     ENVIRONMENTAL MONITORING
                   </p>
 
-                  <h2>Room Conditions</h2>
+                  <h2>Archive Conditions</h2>
                 </div>
 
                 <span className="live-reading-badge">
@@ -351,7 +361,7 @@ function Dashboard({ onOpenGallery }) {
                   min={0}
                   max={50}
                   unit="°C"
-                  helperText="Museum average"
+                  helperText="Archive facility average"
                 />
 
                 <Gauge
@@ -362,7 +372,7 @@ function Dashboard({ onOpenGallery }) {
                   min={0}
                   max={100}
                   unit="%"
-                  helperText="Museum average"
+                  helperText="Archive facility average"
                 />
               </div>
             </section>
@@ -412,8 +422,8 @@ function Dashboard({ onOpenGallery }) {
                   </strong>
 
                   <p>
-                    Automated interpretation of gallery
-                    sensor conditions.
+                    Automated interpretation of archive-zone sensor
+                    conditions and cross-zone activity.
                   </p>
                 </div>
               </div>
@@ -439,10 +449,7 @@ function Dashboard({ onOpenGallery }) {
                 <span>RECOMMENDATION</span>
 
                 <p>
-                  {
-                    museumData.analysis
-                      .recommendation
-                  }
+                  {museumData.analysis.recommendation}
                 </p>
               </div>
             </section>

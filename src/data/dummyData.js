@@ -1,15 +1,17 @@
 export const museumData = {
-    project: {
-      name: "ARTICOL",
-      subtitle: "Smart Museum Security & Threat Correlation System",
-      location: "Bengaluru, India",
-      mode: "DEMO MODE",
-    },
+project: {
+  name: "ARTICOL",
+  subtitle: "Intelligent Artifact Archive Security System",
+  descriptor: "Artifact Intelligence & Threat Correlation Operations Layer",
+  location: "Bengaluru Archive Facility, India",
+  mode: "DEMO MODE",
+},
   
     system: {
       status: "WARNING",
       overallThreat: 46,
-      visitorCount: 24,
+      occupancyCount: 24,
+      maximumOccupancy: 60,
       activeIncidentCount: 1,
       averageTemperature: 24.6,
       averageHumidity: 58,
@@ -20,10 +22,9 @@ export const museumData = {
     galleries: [
       {
         id: "A",
-        name: "Gallery A",
-        collection: "Ancient Collection",
-        icon: "🏺",
-        accessMode: "PUBLIC",
+        name: "Archive Zone A",
+        collection: "Historical Ceramic Repository",
+        accessMode: "STANDARD",
         status: "SAFE",
         threatScore: 12,
         temperature: 23.8,
@@ -44,7 +45,7 @@ export const museumData = {
           {
             time: "12:28 PM",
             title: "Sensor heartbeat received",
-            description: "Gallery A ESP32 is operating normally",
+            description: "Archive Zone A controller is operating normally",
             type: "SAFE",
           },
           {
@@ -58,10 +59,9 @@ export const museumData = {
   
       {
         id: "B",
-        name: "Gallery B",
-        collection: "Modern Art Collection",
-        icon: "🖼️",
-        accessMode: "PUBLIC",
+        name: "Archive Zone B",
+        collection: "Visual Artifact Repository",
+        accessMode: "STANDARD",
         status: "WARNING",
         threatScore: 46,
         temperature: 25.2,
@@ -90,7 +90,7 @@ export const museumData = {
           {
             time: "12:30 PM",
             title: "Motion detected",
-            description: "Movement detected near the modern art display",
+            description: "Movement detected near the visual artifact storage racks",
             type: "WARNING",
           },
           {
@@ -102,7 +102,7 @@ export const museumData = {
           {
             time: "12:25 PM",
             title: "Sensor heartbeat received",
-            description: "Gallery B ESP32 is online",
+            description: "Archive Zone B controller is online",
             type: "SAFE",
           },
         ],
@@ -110,8 +110,8 @@ export const museumData = {
   
       {
         id: "C",
-        name: "Gallery C",
-        collection: "Exotic Artifact Vault",
+        name: "High-Security Vault C",
+        collection: "Rare and Restricted Artifact Archive",
         icon: "👑",
         accessMode: "RESTRICTED",
         status: "SAFE",
@@ -138,7 +138,7 @@ export const museumData = {
           {
             time: "12:27 PM",
             title: "Restricted mode confirmed",
-            description: "Gallery C access is limited to authorized personnel",
+            description: "Vault C access is limited to authorized archive personnel",
             type: "INFO",
           },
           {
@@ -151,67 +151,69 @@ export const museumData = {
       },
     ],
   
-    systemEvents: [
-      {
-        time: "12:30 PM",
-        title: "Gallery B warning",
-        description: "Motion activity increased the threat score",
-        type: "WARNING",
-      },
-      {
-        time: "12:27 PM",
-        title: "Gallery C restricted mode",
-        description: "Restricted access remains active",
-        type: "INFO",
-      },
-      {
-        time: "12:25 PM",
-        title: "All ESP32 devices online",
-        description: "Three gallery controllers responding",
-        type: "SAFE",
-      },
-    ],
+systemEvents: [
+  {
+    time: "12:30 PM",
+    title: "Archive Zone B warning",
+    description: "Motion activity increased the archive threat score",
+    type: "WARNING",
+  },
+  {
+    time: "12:27 PM",
+    title: "Vault C restricted mode",
+    description: "Restricted archive access remains active",
+    type: "INFO",
+  },
+  {
+    time: "12:25 PM",
+    title: "All archive controllers online",
+    description: "Three archive-zone controllers are responding",
+    type: "SAFE",
+  },
+],
   
-    analysis: {
-      title: "Current Situation",
-      observations: [
-        {
-          status: "SAFE",
-          text: "Gallery A is operating normally.",
-        },
-        {
-          status: "WARNING",
-          text: "Gallery B shows abnormal motion activity.",
-        },
-        {
-          status: "SAFE",
-          text: "Gallery C remains secure in restricted mode.",
-        },
-      ],
-      recommendation:
-        "Continue monitoring Gallery B and verify the detected movement.",
+   analysis: {
+  title: "Archive Security Assessment",
+
+  observations: [
+    {
+      status: "SAFE",
+      text: "Archive Zone A is operating under normal storage conditions.",
     },
+    {
+      status: "WARNING",
+      text: "Archive Zone B shows abnormal movement activity.",
+    },
+    {
+      status: "SAFE",
+      text: "High-Security Vault C remains secured in restricted mode.",
+    },
+  ],
+
+  recommendation:
+    "Continue monitoring Archive Zone B and verify the detected movement before authorizing further access.",
+},
   
-    demoScenarios: [
-      {
-        id: "all-safe",
-        label: "All Safe",
-      },
-      {
-        id: "gallery-b-warning",
-        label: "Gallery B Suspicious Activity",
-      },
-      {
-        id: "gallery-c-intrusion",
-        label: "Gallery C Restricted Intrusion",
-      },
-      {
-        id: "correlated-threat",
-        label: "Multi-Gallery Correlated Threat",
-      },
-      {
-        id: "esp-offline",
-        label: "ESP32 Offline",
-      },
-    ],
+demoScenarios: [
+  {
+    id: "all-safe",
+    label: "All Archive Zones Secure",
+  },
+  {
+    id: "zone-b-warning",
+    label: "Archive Zone B Suspicious Activity",
+  },
+  {
+    id: "vault-c-intrusion",
+    label: "Restricted Vault Intrusion",
+  },
+  {
+    id: "correlated-threat",
+    label: "Multi-Zone Correlated Threat",
+  },
+  {
+    id: "controller-offline",
+    label: "Archive Controller Offline",
+  },
+],
   };

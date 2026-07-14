@@ -3635,3 +3635,11 @@ button {
     grid-template-columns: 1fr;
   }
 }
+/* ---------- STEP 23: ARCHIVE OCCUPANCY ---------- */
+
+.occupancy-limit {
+  margin-left: 3px;
+  color: #667f9c;
+  font-size: 11px;
+  font-weight: 700;
+}

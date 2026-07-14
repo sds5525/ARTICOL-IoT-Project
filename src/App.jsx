@@ -1,27 +1,43 @@
 import { useState } from "react";
 import "./App.css";
+
 import Dashboard from "./pages/Dashboard";
 import GalleryPage from "./pages/GalleryPage";
+
 import { museumData } from "./data/dummyData";
 
 function App() {
-  const [selectedGalleryId, setSelectedGalleryId] = useState(null);
+  const [selectedGalleryId, setSelectedGalleryId] =
+    useState(null);
 
-  const selectedGallery = museumData.galleries.find(
-    (gallery) => gallery.id === selectedGalleryId,
+  const [galleries, setGalleries] = useState(
+    structuredClone(museumData.galleries),
   );
 
   function openGallery(galleryId) {
     setSelectedGalleryId(galleryId);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
   function closeGallery() {
     setSelectedGalleryId(null);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   }
 
-  if (selectedGalleryId) {
+  const selectedGallery = galleries.find(
+    (gallery) =>
+      gallery.id === selectedGalleryId,
+  );
+
+  if (selectedGalleryId && selectedGallery) {
     return (
       <GalleryPage
         gallery={selectedGallery}
@@ -30,7 +46,13 @@ function App() {
     );
   }
 
-  return <Dashboard onOpenGallery={openGallery} />;
+  return (
+    <Dashboard
+      galleries={galleries}
+      setGalleries={setGalleries}
+      onOpenGallery={openGallery}
+    />
+  );
 }
 
 export default App;

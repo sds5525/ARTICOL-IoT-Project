@@ -5,10 +5,11 @@ import MuseumMap from "../components/MuseumMap";
 import ManualControls from "../components/ManualControls";
 import { museumData } from "../data/dummyData";
 
-function Dashboard({ onOpenGallery }) {
-  const [galleries, setGalleries] = useState(() =>
-    structuredClone(museumData.galleries),
-  );
+function Dashboard({
+  galleries,
+  setGalleries,
+  onOpenGallery,
+}) {
 
   const [galleryCRestricted, setGalleryCRestricted] = useState(
     museumData.galleryCRestricted,
@@ -41,24 +42,40 @@ function Dashboard({ onOpenGallery }) {
           if (gallery.id === "C") sensorData = archiveC;
 
           return {
-            ...gallery,
+  ...gallery,
 
-            temperature: Number(
-              sensorData.temperature || 0,
-            ),
+  temperature: Number(
+    sensorData.temperature || 0,
+  ),
 
-            humidity: Number(
-              sensorData.humidity || 0,
-            ),
+  humidity: Number(
+    sensorData.humidity || 0,
+  ),
 
-            motion: Number(
-              sensorData.motion || 0,
-            ) === 1,
+  motion: Number(
+    sensorData.motion || 0,
+  ) === 1,
 
-            distance: Number(
-              sensorData.distance || 0,
-            ),
-          };
+  distance: Number(
+    sensorData.distance || 0,
+  ),
+
+  status: sensorData.status,
+
+  threatScore: sensorData.threatScore,
+
+  artifactMoved:
+    sensorData.artifactMoved,
+
+  espOnline: sensorData.espOnline,
+
+  accessMode:
+    sensorData.accessMode ||
+    gallery.accessMode,
+
+  threatFactors:
+    sensorData.threatFactors || [],
+};
         }),
       );
     } catch (error) {
@@ -184,11 +201,14 @@ function Dashboard({ onOpenGallery }) {
   }
 
   function resetDashboard() {
-    setGalleries(structuredClone(museumData.galleries));
-    setGalleryCRestricted(museumData.galleryCRestricted);
-    setLockdown(false);
-    setAlertAcknowledged(false);
-  }
+  setGalleryCRestricted(
+    museumData.galleryCRestricted,
+  );
+
+  setLockdown(false);
+
+  setAlertAcknowledged(false);
+}
 
   return (
     <div className="articol-dashboard">

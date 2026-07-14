@@ -105,8 +105,8 @@ function ToggleSwitch({
           <span>⚠</span>
   
           <p>
-            These controls currently affect demo data only. Node-RED commands
-            will be connected later.
+            Commands are synchronized with the
+            Node-RED security controller.
           </p>
         </div>
       </section>

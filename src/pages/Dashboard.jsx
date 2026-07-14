@@ -114,20 +114,45 @@ function Dashboard({ onOpenGallery }) {
       0,
     ) / galleries.length;
 
-  function handleGalleryCModeChange(restricted) {
-    setGalleryCRestricted(restricted);
+  async function handleGalleryCModeChange(
+  restricted,
+) {
+  setGalleryCRestricted(restricted);
 
-    setGalleries((currentGalleries) =>
-      currentGalleries.map((gallery) =>
-        gallery.id === "C"
-          ? {
-              ...gallery,
-              accessMode: restricted ? "RESTRICTED" : "STANDARD",
-            }
-          : gallery,
-      ),
+  try {
+    await fetch(
+      "http://localhost:1880/api/galleryC/mode",
+      {
+        method: "POST",
+
+        headers: {
+          "Content-Type":
+            "application/json",
+        },
+
+        body: JSON.stringify({
+          restricted,
+        }),
+      },
     );
+  } catch (error) {
+    console.error(error);
   }
+
+  setGalleries((currentGalleries) =>
+    currentGalleries.map((gallery) =>
+      gallery.id === "C"
+        ? {
+            ...gallery,
+
+            accessMode: restricted
+              ? "RESTRICTED"
+              : "STANDARD",
+          }
+        : gallery,
+    ),
+  );
+}
 
   function handleLockdownChange(enabled) {
     setLockdown(enabled);

@@ -8,6 +8,12 @@ import { museumData } from "../data/dummyData";
 function Dashboard({
   galleries,
   setGalleries,
+  criticalLatched,
+  setCriticalLatched,
+  alertAcknowledged,
+  setAlertAcknowledged,
+  systemEvents,
+  threatAnalysis,
   onOpenGallery,
 }) {
   const [galleryCRestricted, setGalleryCRestricted] = useState(
@@ -15,14 +21,20 @@ function Dashboard({
   );
 
   const [lockdown, setLockdown] = useState(false);
-  const [alertAcknowledged, setAlertAcknowledged] = useState(false);
 
   const overallThreat = useMemo(() => {
     return Math.max(...galleries.map((gallery) => gallery.threatScore));
   }, [galleries]);
 
   const overallStatus = useMemo(() => {
-    if (lockdown || overallThreat >= 70) {
+    const currentCriticalCondition =
+      lockdown ||
+      galleries.some(
+        (gallery) =>
+          gallery.status === "CRITICAL" || gallery.threatScore >= 70,
+      );
+
+    if (criticalLatched || currentCriticalCondition) {
       return "CRITICAL";
     }
 
@@ -31,7 +43,7 @@ function Dashboard({
     }
 
     return "SAFE";
-  }, [lockdown, overallThreat]);
+  }, [criticalLatched, galleries, lockdown, overallThreat]);
 
   const activeIncidents = galleries.filter(
     (gallery) =>
@@ -66,6 +78,10 @@ function Dashboard({
       : overallStatus === "WARNING"
         ? "Suspicious archive activity requires monitoring"
         : "Immediate archive-security response required";
+
+  const operatorFieldValue = (value) => value ?? "--";
+
+  const hasSystemEvents = systemEvents.length > 0;
 
   const onlineControllerCount = galleries.filter(
     (gallery) => gallery.espOnline,
@@ -106,6 +122,11 @@ function Dashboard({
     setLockdown(enabled);
 
     if (enabled) {
+      setCriticalLatched(true);
+      setAlertAcknowledged(false);
+    }
+
+    if (enabled) {
       setGalleries((currentGalleries) =>
         currentGalleries.map((gallery) => ({
           ...gallery,
@@ -117,26 +138,6 @@ function Dashboard({
 
       return;
     }
-
-    setGalleries(
-      museumData.galleries.map((gallery) => ({
-        ...structuredClone(gallery),
-        accessMode:
-          gallery.id === "C"
-            ? galleryCRestricted
-              ? "RESTRICTED"
-              : "STANDARD"
-            : gallery.accessMode,
-      })),
-    );
-  }
-
-  function resetDashboard() {
-    setGalleryCRestricted(museumData.galleryCRestricted);
-
-    setLockdown(false);
-
-    setAlertAcknowledged(false);
   }
 
   return (
@@ -278,23 +279,27 @@ function Dashboard({
               </div>
 
               <div className="event-stream-list">
-                {museumData.systemEvents.map((event, index) => (
-                  <article
-                    className="stream-event"
-                    key={`${event.time}-${event.title}-${index}`}
-                  >
-                    <time>{event.time}</time>
+                {hasSystemEvents ? (
+                  systemEvents.map((event, index) => (
+                    <article
+                      className="stream-event"
+                      key={`${event.time ?? index}-${event.title ?? "event"}-${index}`}
+                    >
+                      <time>{event.time ?? "--"}</time>
 
-                    <span
-                      className={`stream-event-dot ${event.type.toLowerCase()}`}
-                    />
+                      <span
+                        className={`stream-event-dot ${(event.type || "info").toLowerCase()}`}
+                      />
 
-                    <div>
-                      <strong>{event.title}</strong>
-                      <p>{event.description}</p>
-                    </div>
-                  </article>
-                ))}
+                      <div>
+                        <strong>{event.title ?? "--"}</strong>
+                        <p>{event.description ?? "--"}</p>
+                      </div>
+                    </article>
+                  ))
+                ) : (
+                  <p className="panel-empty-state">No recent events</p>
+                )}
               </div>
             </section>
 
@@ -331,12 +336,16 @@ function Dashboard({
 
                     <div>
                       <strong>
-                        {gallery.name} Controller
+                        {gallery.name}
                       </strong>
 
                       <p>
-                        ESP32-{gallery.id} · Archive sensor gateway
+                        ESP32-{gallery.id} {gallery.espOnline ? "ONLINE" : "OFFLINE"}
                       </p>
+
+                      <small>
+                        Last update: {operatorFieldValue(gallery.lastUpdateTime)}
+                      </small>
                     </div>
 
                     <span
@@ -346,9 +355,7 @@ function Dashboard({
                           : "controller-state offline"
                       }
                     >
-                      {gallery.espOnline
-                        ? "ONLINE"
-                        : "OFFLINE"}
+                      {gallery.espOnline ? "CONNECTED" : "DISCONNECTED"}
                     </span>
                   </article>
                 ))}
@@ -407,10 +414,10 @@ function Dashboard({
               onLockdownChange={
                 handleLockdownChange
               }
-              onAcknowledge={() =>
+              onAcknowledge={() => {
+                setCriticalLatched(false);
                 setAlertAcknowledged(true)
-              }
-              onReset={resetDashboard}
+              }}
             />
 
             <section className="ai-analysis-panel">
@@ -430,47 +437,37 @@ function Dashboard({
               </div>
 
               <div className="analysis-status">
-                <span
-                  className={`analysis-status-icon ${overallStatus.toLowerCase()}`}
-                >
-                  ◈
-                </span>
-
                 <div>
-                  <strong>
-                    {museumData.analysis.title}
-                  </strong>
-
-                  <p>
-                    Automated interpretation of archive-zone sensor
-                    conditions and cross-zone activity.
-                  </p>
+                  <strong>Current Threat Level</strong>
+                  <p>{operatorFieldValue(threatAnalysis.currentThreatLevel)}</p>
                 </div>
               </div>
 
-              <div className="analysis-observations">
-                {museumData.analysis.observations.map(
-                  (observation, index) => (
-                    <div
-                      className="analysis-observation"
-                      key={`${observation.text}-${index}`}
-                    >
-                      <span
-                        className={`observation-dot ${observation.status.toLowerCase()}`}
-                      />
+              <div className="analysis-field-list">
+                <div className="analysis-field">
+                  <span>Primary Trigger</span>
+                  <strong>{operatorFieldValue(threatAnalysis.primaryTrigger)}</strong>
+                </div>
 
-                      <p>{observation.text}</p>
-                    </div>
-                  ),
-                )}
-              </div>
+                <div className="analysis-field">
+                  <span>Affected Archive</span>
+                  <strong>{operatorFieldValue(threatAnalysis.affectedArchive)}</strong>
+                </div>
 
-              <div className="analysis-recommendation">
-                <span>RECOMMENDATION</span>
+                <div className="analysis-field">
+                  <span>Recommended Immediate Action</span>
+                  <strong>{operatorFieldValue(threatAnalysis.recommendedImmediateAction)}</strong>
+                </div>
 
-                <p>
-                  {museumData.analysis.recommendation}
-                </p>
+                <div className="analysis-field">
+                  <span>System Decision</span>
+                  <strong>{operatorFieldValue(threatAnalysis.systemDecision)}</strong>
+                </div>
+
+                <div className="analysis-field analysis-field-wide">
+                  <span>Operator Action Required</span>
+                  <strong>{operatorFieldValue(threatAnalysis.operatorActionRequired)}</strong>
+                </div>
               </div>
             </section>
           </aside>

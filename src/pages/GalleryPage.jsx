@@ -39,7 +39,7 @@ function SensorCard({
   );
 }
 
-function GalleryPage({ gallery, onBack }) {
+function GalleryPage({ gallery, recentEvents = [], onBack }) {
   if (!gallery) {
     return (
       <div className="gallery-page">
@@ -288,28 +288,32 @@ function GalleryPage({ gallery, onBack }) {
               </div>
 
               <span className="event-count">
-                {gallery.recentEvents.length} EVENTS
+                {recentEvents.length} EVENTS
               </span>
             </div>
 
             <div className="gallery-event-list">
-              {gallery.recentEvents.map((event, index) => (
-                <article
-                  className="gallery-event-item"
-                  key={`${event.time}-${event.title}-${index}`}
-                >
-                  <time>{event.time}</time>
+              {recentEvents.length > 0 ? (
+                recentEvents.map((event, index) => (
+                  <article
+                    className="gallery-event-item"
+                    key={`${event.time ?? index}-${event.title ?? "event"}-${index}`}
+                  >
+                    <time>{event.time ?? "--"}</time>
 
-                  <span
-                    className={`gallery-event-dot ${event.type.toLowerCase()}`}
-                  />
+                    <span
+                      className={`gallery-event-dot ${(event.type || "info").toLowerCase()}`}
+                    />
 
-                  <div>
-                    <strong>{event.title}</strong>
-                    <p>{event.description}</p>
-                  </div>
-                </article>
-              ))}
+                    <div>
+                      <strong>{event.title ?? "--"}</strong>
+                      <p>{event.description ?? "--"}</p>
+                    </div>
+                  </article>
+                ))
+              ) : (
+                <p className="panel-empty-state">No recent events</p>
+              )}
             </div>
           </section>
         </section>

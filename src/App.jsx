@@ -6,11 +6,54 @@ import GalleryPage from "./pages/GalleryPage";
 
 import { museumData } from "./data/dummyData";
 
+function createInitialGalleries() {
+  return museumData.galleries.map((gallery) => ({
+    id: gallery.id,
+    name: gallery.name,
+    collection: gallery.collection,
+    icon: gallery.icon,
+    accessMode:
+      gallery.id === "C" && museumData.galleryCRestricted
+        ? "RESTRICTED"
+        : "STANDARD",
+    status: "SAFE",
+    threatScore: 0,
+    temperature: 0,
+    humidity: 0,
+    motion: false,
+    doorOpen: false,
+    artifactMoved: false,
+    espOnline: false,
+    lastUpdateTime: null,
+    threatFactors: [],
+  }));
+}
+
+function createEmptyThreatAnalysis() {
+  return {
+    currentThreatLevel: null,
+    primaryTrigger: null,
+    affectedArchive: null,
+    recommendedImmediateAction: null,
+    systemDecision: null,
+    operatorActionRequired: null,
+  };
+}
+
 function App() {
   const [selectedGalleryId, setSelectedGalleryId] = useState(null);
+  const [criticalLatched, setCriticalLatched] = useState(false);
+  const [alertAcknowledged, setAlertAcknowledged] = useState(false);
 
-  const [galleries, setGalleries] = useState(() =>
-    structuredClone(museumData.galleries),
+  const [galleries, setGalleries] = useState(createInitialGalleries);
+  const [systemEvents, setSystemEvents] = useState([]);
+  const [galleryEventsById, setGalleryEventsById] = useState({
+    A: [],
+    B: [],
+    C: [],
+  });
+  const [threatAnalysis, setThreatAnalysis] = useState(
+    createEmptyThreatAnalysis,
   );
 
   useEffect(() => {
@@ -32,6 +75,10 @@ function App() {
           currentGalleries.map((gallery) => {
             const sensorData = sensorDataByGallery[gallery.id];
 
+            if (!sensorData) {
+              return gallery;
+            }
+
             return {
               ...gallery,
               temperature: Number(sensorData.temperature || 0),
@@ -44,17 +91,79 @@ function App() {
               espOnline: sensorData.espOnline,
               accessMode: sensorData.accessMode || gallery.accessMode,
               threatFactors: sensorData.threatFactors || [],
+              lastUpdateTime:
+                sensorData.lastUpdateTime ||
+                sensorData.updatedAt ||
+                sensorData.timestamp ||
+                gallery.lastUpdateTime,
             };
           }),
         );
+
+        const hasCriticalCondition = Object.values(sensorDataByGallery).some(
+          (sensorData) =>
+            sensorData &&
+            (sensorData.status === "CRITICAL" ||
+              Number(sensorData.threatScore || 0) >= 70),
+        );
+
+        if (hasCriticalCondition) {
+          setCriticalLatched(true);
+          setAlertAcknowledged(false);
+        }
       } catch (error) {
         console.error("Error fetching sensor data:", error);
       }
     }
 
-    fetchSensorData();
+    async function fetchEventData() {
+      try {
+        const response = await fetch("http://localhost:1880/api/events");
 
-    const interval = setInterval(fetchSensorData, 2000);
+        if (!response.ok) {
+          return;
+        }
+
+        const payload = await response.json();
+
+        setSystemEvents(Array.isArray(payload.systemEvents) ? payload.systemEvents : []);
+
+        const galleryEventsSource =
+          payload.galleryEventsById || payload.recentEventsByGallery || {};
+
+        setGalleryEventsById({
+          A: Array.isArray(galleryEventsSource.A) ? galleryEventsSource.A : [],
+          B: Array.isArray(galleryEventsSource.B) ? galleryEventsSource.B : [],
+          C: Array.isArray(galleryEventsSource.C) ? galleryEventsSource.C : [],
+        });
+
+        setThreatAnalysis(
+          payload.threatAnalysis && typeof payload.threatAnalysis === "object"
+            ? {
+                currentThreatLevel:
+                  payload.threatAnalysis.currentThreatLevel ?? null,
+                primaryTrigger: payload.threatAnalysis.primaryTrigger ?? null,
+                affectedArchive: payload.threatAnalysis.affectedArchive ?? null,
+                recommendedImmediateAction:
+                  payload.threatAnalysis.recommendedImmediateAction ?? null,
+                systemDecision: payload.threatAnalysis.systemDecision ?? null,
+                operatorActionRequired:
+                  payload.threatAnalysis.operatorActionRequired ?? null,
+              }
+            : createEmptyThreatAnalysis(),
+        );
+      } catch {
+        return;
+      }
+    }
+
+    fetchSensorData();
+    fetchEventData();
+
+    const interval = setInterval(() => {
+      fetchSensorData();
+      fetchEventData();
+    }, 2000);
 
     return () => clearInterval(interval);
   }, []);
@@ -86,6 +195,7 @@ function App() {
     return (
       <GalleryPage
         gallery={selectedGallery}
+        recentEvents={galleryEventsById[selectedGalleryId] || []}
         onBack={closeGallery}
       />
     );
@@ -95,6 +205,12 @@ function App() {
     <Dashboard
       galleries={galleries}
       setGalleries={setGalleries}
+      criticalLatched={criticalLatched}
+      setCriticalLatched={setCriticalLatched}
+      alertAcknowledged={alertAcknowledged}
+      setAlertAcknowledged={setAlertAcknowledged}
+      systemEvents={systemEvents}
+      threatAnalysis={threatAnalysis}
       onOpenGallery={openGallery}
     />
   );

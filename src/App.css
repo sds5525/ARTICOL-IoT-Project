@@ -1068,6 +1068,19 @@ button {
   opacity: 0.6;
 }
 
+.gallery-card.restricted {
+  border-color: rgba(181, 126, 255, 0.56);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(32, 22, 58, 0.98),
+      rgba(14, 17, 37, 0.98)
+    );
+  box-shadow:
+    0 0 0 1px rgba(177, 121, 255, 0.12),
+    0 0 24px rgba(162, 102, 240, 0.1);
+}
+
 .gallery-card-top {
   display: flex;
   align-items: flex-start;
@@ -2066,6 +2079,41 @@ button {
   font-size: 9px;
 }
 
+.analysis-field-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 13px;
+}
+
+.analysis-field {
+  padding: 11px;
+  border: 1px solid rgba(96, 158, 224, 0.12);
+  border-radius: 10px;
+  background: rgba(72, 127, 186, 0.05);
+}
+
+.analysis-field-wide {
+  grid-column: 1 / -1;
+}
+
+.analysis-field span {
+  display: block;
+  color: #73aee7;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.analysis-field strong {
+  display: block;
+  margin-top: 6px;
+  color: #dbe8f5;
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1.45;
+}
+
 .analysis-observations {
   margin-top: 13px;
 }
@@ -2201,6 +2249,12 @@ button {
   font-size: 9px;
 }
 
+.panel-empty-state {
+  margin: 8px 0 0;
+  color: #7e94af;
+  font-size: 10px;
+}
+
 .controller-count {
   border: 1px solid rgba(77, 218, 158, 0.2);
   background: rgba(77, 218, 158, 0.07);
@@ -2249,6 +2303,13 @@ button {
   margin: 4px 0 0;
   color: #687f9a;
   font-size: 9px;
+}
+
+.controller-item small {
+  display: block;
+  margin-top: 4px;
+  color: #8298b2;
+  font-size: 8px;
 }
 
 .controller-state {

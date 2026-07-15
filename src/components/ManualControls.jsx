@@ -33,7 +33,6 @@ function ToggleSwitch({
     onGalleryCModeChange,
     onLockdownChange,
     onAcknowledge,
-    onReset,
   }) {
     return (
       <section className="manual-controls-panel">
@@ -91,23 +90,6 @@ function ToggleSwitch({
               ? "Alert Acknowledged"
               : "Acknowledge Alert"}
           </button>
-  
-          <button
-            type="button"
-            className="reset-control"
-            onClick={onReset}
-          >
-            Reset Demo
-          </button>
-        </div>
-  
-        <div className="manual-control-warning">
-          <span>⚠</span>
-  
-          <p>
-            Commands are synchronized with the
-            Node-RED security controller.
-          </p>
         </div>
       </section>
     );

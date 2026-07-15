@@ -13,7 +13,7 @@ function GalleryCard({ gallery, onOpen }) {
   return (
     <button
       type="button"
-      className={`gallery-card gallery-${gallery.id.toLowerCase()} ${statusClass}`}
+      className={`gallery-card gallery-${gallery.id.toLowerCase()} ${statusClass} ${isRestricted ? "restricted" : "public"}`}
       onClick={() => onOpen(gallery.id)}
     >
       <div className="gallery-card-top">

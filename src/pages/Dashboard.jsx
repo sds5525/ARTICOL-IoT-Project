@@ -22,6 +22,9 @@ function Dashboard({
     museumData.galleryCRestricted,
   );
 
+  const [visitorCount, setVisitorCount] =
+    useState(0);
+
   const overallThreat = useMemo(() => {
     return Math.max(...galleries.map((gallery) => gallery.threatScore));
   }, [galleries]);
@@ -205,7 +208,7 @@ function Dashboard({
               <p>Authorized Occupancy</p>
 
               <h3>
-                {museumData.system.occupancyCount}
+                {visitorCount}
 
                 <small className="occupancy-limit">
                   /{museumData.system.maximumOccupancy}

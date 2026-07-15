@@ -73,6 +73,7 @@ function App() {
   const [criticalLatched, setCriticalLatched] = useState(false);
   const [alertAcknowledged, setAlertAcknowledged] = useState(false);
   const [lockdown, setLockdown] = useState(false);
+  const [visitorCount, setVisitorCount] = useState(0);
 
   const [galleries, setGalleries] = useState(createInitialGalleries);
 
@@ -84,6 +85,15 @@ function App() {
           fetch("http://localhost:1880/api/archive/B").then((r) => r.json()),
           fetch("http://localhost:1880/api/archive/C").then((r) => r.json()),
         ]);
+
+        const visitors =
+          await fetch(
+            "http://localhost:1880/api/visitors"
+          ).then((r) => r.json());
+
+          setVisitorCount(
+            visitors.visitorCount
+      );
 
         const sensorDataByGallery = {
           A: archiveA,
@@ -211,12 +221,13 @@ function App() {
     <Dashboard
       galleries={galleries}
       setGalleries={setGalleries}
-        lockdown={lockdown}
-        setLockdown={setLockdown}
+      lockdown={lockdown}
+      setLockdown={setLockdown}
       criticalLatched={criticalLatched}
       setCriticalLatched={setCriticalLatched}
       alertAcknowledged={alertAcknowledged}
       setAlertAcknowledged={setAlertAcknowledged}
+      visitorCount={visitorCount}
       systemEvents={systemEvents}
       threatAnalysis={threatAnalysis}
       onOpenGallery={openGallery}

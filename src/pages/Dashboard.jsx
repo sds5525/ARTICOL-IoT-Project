@@ -14,6 +14,7 @@ function Dashboard({
   setCriticalLatched,
   alertAcknowledged,
   setAlertAcknowledged,
+  hasReceivedLiveData,
   visitorCount,
   systemEvents,
   threatAnalysis,
@@ -28,29 +29,28 @@ function Dashboard({
   }, [galleries]);
 
   const overallStatus = useMemo(() => {
-    const currentCriticalCondition =
-      lockdown ||
-      galleries.some(
-        (gallery) =>
-          gallery.status === "CRITICAL" || gallery.threatScore >= 70,
-      );
+    if (!hasReceivedLiveData) {
+      return "CONNECTING";
+    }
 
-    if (criticalLatched || currentCriticalCondition) {
+    if (lockdown || criticalLatched) {
       return "CRITICAL";
     }
 
-    if (overallThreat >= 35) {
+    const hasWarningGallery = galleries.some(
+      (gallery) => gallery.status === "WARNING",
+    );
+
+    if (overallThreat >= 35 || hasWarningGallery) {
       return "WARNING";
     }
 
     return "SAFE";
-  }, [criticalLatched, galleries, lockdown, overallThreat]);
+  }, [criticalLatched, galleries, hasReceivedLiveData, lockdown, overallThreat]);
 
   const activeIncidents = galleries.filter(
     (gallery) =>
-      gallery.status === "CRITICAL" ||
-      gallery.doorOpen ||
-      gallery.artifactMoved,
+      gallery.status === "WARNING" || gallery.status === "CRITICAL",
   ).length;
 
   const averageTemperature =
@@ -74,7 +74,9 @@ function Dashboard({
     : "STANDARD";
 
   const overallStatusMessage =
-    overallStatus === "SAFE"
+    overallStatus === "CONNECTING"
+      ? "Waiting for the first live Node-RED response"
+      : overallStatus === "SAFE"
       ? "Normal archive security conditions"
       : overallStatus === "WARNING"
         ? "Suspicious archive activity requires monitoring"
@@ -121,21 +123,6 @@ function Dashboard({
 
   function handleLockdownChange(enabled) {
     setLockdown(enabled);
-
-    if (enabled) {
-      setCriticalLatched(true);
-      setAlertAcknowledged(false);
-      setGalleries((currentGalleries) =>
-        currentGalleries.map((gallery) => ({
-          ...gallery,
-          status: "CRITICAL",
-          threatScore: Math.max(gallery.threatScore, 90),
-          doorOpen: false,
-        })),
-      );
-
-      return;
-    }
   }
 
   return (
@@ -413,7 +400,6 @@ function Dashboard({
                 handleLockdownChange
               }
               onAcknowledge={() => {
-                setLockdown(false);
                 setCriticalLatched(false);
                 setAlertAcknowledged(true);
               }}

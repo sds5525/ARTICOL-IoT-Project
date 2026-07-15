@@ -203,6 +203,7 @@ function App() {
   const [criticalLatched, setCriticalLatched] = useState(false);
   const [alertAcknowledged, setAlertAcknowledged] = useState(false);
   const [lockdown, setLockdown] = useState(false);
+  const [hasReceivedLiveData, setHasReceivedLiveData] = useState(false);
   const [visitorCount, setVisitorCount] = useState(0);
 
   const [galleries, setGalleries] = useState(createInitialGalleries);
@@ -212,6 +213,7 @@ function App() {
   );
 
   const previousSensorSnapshotRef = useRef(null);
+  const previousCriticalConditionRef = useRef(false);
 
   useEffect(() => {
     async function fetchSensorData() {
@@ -232,14 +234,21 @@ function App() {
           C: archiveC,
         };
 
-        const hasCriticalCondition = Object.values(sensorDataByGallery).some(
-          (sensorData) =>
-            sensorData &&
-            (sensorData.status === "CRITICAL" ||
-              Number(sensorData.threatScore || 0) >= 70),
+        const validLiveSensorData = Object.values(sensorDataByGallery).filter(
+          (sensorData) => sensorData && sensorData.espOnline === true,
         );
 
-        const forceCriticalDisplay = lockdown || criticalLatched || hasCriticalCondition;
+        const receivedLiveData = validLiveSensorData.length > 0;
+        const currentCriticalCondition = validLiveSensorData.some(
+          (sensorData) =>
+            sensorData.status === "CRITICAL" ||
+            Number(sensorData.threatScore || 0) >= 70,
+        );
+
+        if (receivedLiveData) {
+          setHasReceivedLiveData(true);
+        }
+
         const previousSnapshot = previousSensorSnapshotRef.current;
         const nextGalleryEventsById = createEmptyEventMap();
         const nextSystemEvents = [];
@@ -250,22 +259,11 @@ function App() {
             const sensorData = sensorDataByGallery[gallery.id];
 
             if (!sensorData) {
-              if (!forceCriticalDisplay) {
+              if (previousSnapshot) {
                 nextGallerySnapshotById[gallery.id] = gallery;
-
-                return gallery;
               }
 
-              const forcedGallery = {
-                ...gallery,
-                status: "CRITICAL",
-                threatScore: Math.max(gallery.threatScore, 90),
-                doorOpen: false,
-              };
-
-              nextGallerySnapshotById[gallery.id] = forcedGallery;
-
-              return forcedGallery;
+              return gallery;
             }
 
             const nextGallery = {
@@ -296,19 +294,6 @@ function App() {
                 gallery.lastUpdateTime,
             };
 
-            if (forceCriticalDisplay) {
-              const forcedGallery = {
-                ...nextGallery,
-                status: "CRITICAL",
-                threatScore: Math.max(Number(nextGallery.threatScore || 0), 90),
-                doorOpen: false,
-              };
-
-              nextGallerySnapshotById[gallery.id] = forcedGallery;
-
-              return forcedGallery;
-            }
-
             nextGallerySnapshotById[gallery.id] = nextGallery;
 
             return nextGallery;
@@ -335,10 +320,8 @@ function App() {
                 Number(sensorData.soundAnalog || 0) > 0 ||
                 Number(sensorData.soundDigital || 0) === 1,
               distance: Number(sensorData.distance || 0),
-              status: forceCriticalDisplay ? "CRITICAL" : sensorData.status,
-              threatScore: forceCriticalDisplay
-                ? Math.max(Number(sensorData.threatScore || 0), 90)
-                : Number(sensorData.threatScore || 0),
+              status: sensorData.status,
+              threatScore: Number(sensorData.threatScore || 0),
               artifactMoved: sensorData.artifactMoved,
               espOnline: sensorData.espOnline,
               accessMode: sensorData.accessMode || previousGallery.accessMode,
@@ -380,12 +363,19 @@ function App() {
           }));
         }
 
-        previousSensorSnapshotRef.current = nextGallerySnapshotById;
+        if (receivedLiveData) {
+          previousSensorSnapshotRef.current = nextGallerySnapshotById;
+        }
 
-        if (hasCriticalCondition) {
+        if (
+          currentCriticalCondition &&
+          !previousCriticalConditionRef.current
+        ) {
           setCriticalLatched(true);
           setAlertAcknowledged(false);
         }
+
+        previousCriticalConditionRef.current = currentCriticalCondition;
       } catch (error) {
         console.error("Error fetching sensor data:", error);
       }
@@ -398,7 +388,7 @@ function App() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, [criticalLatched, lockdown]);
+  }, []);
 
   function openGallery(galleryId) {
     setSelectedGalleryId(galleryId);
@@ -445,6 +435,7 @@ function App() {
       setCriticalLatched={setCriticalLatched}
       alertAcknowledged={alertAcknowledged}
       setAlertAcknowledged={setAlertAcknowledged}
+      hasReceivedLiveData={hasReceivedLiveData}
       visitorCount={visitorCount}
       systemEvents={systemEvents}
       galleryEventsById={galleryEventsById}

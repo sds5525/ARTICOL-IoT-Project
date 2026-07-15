@@ -28,6 +28,13 @@ function SensorCard({
             <i className="signal-wave signal-wave-two" />
           </>
         )}
+
+        {type === "sound" && active && (
+          <>
+            <i className="signal-wave signal-wave-one" />
+            <i className="signal-wave signal-wave-two" />
+          </>
+        )}
       </div>
 
       <div className="sensor-card-content">
@@ -176,6 +183,19 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
                   gallery.artifactMoved
                     ? "Artifact displacement detected."
                     : "Protected artifact remains secure."
+                }
+              />
+
+              <SensorCard
+                title="Sound Sensor"
+                value={gallery.soundDetected ? "DETECTED" : "QUIET"}
+                icon="🔊"
+                active={gallery.soundDetected}
+                type="sound"
+                description={
+                  gallery.soundDetected
+                    ? "Audio activity is currently detected."
+                    : "No sound activity detected."
                 }
               />
 

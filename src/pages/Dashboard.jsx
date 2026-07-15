@@ -14,6 +14,7 @@ function Dashboard({
   setCriticalLatched,
   alertAcknowledged,
   setAlertAcknowledged,
+  visitorCount,
   systemEvents,
   threatAnalysis,
   onOpenGallery,
@@ -21,9 +22,6 @@ function Dashboard({
   const [galleryCRestricted, setGalleryCRestricted] = useState(
     museumData.galleryCRestricted,
   );
-
-  const [visitorCount, setVisitorCount] =
-    useState(0);
 
   const overallThreat = useMemo(() => {
     return Math.max(...galleries.map((gallery) => gallery.threatScore));
@@ -437,37 +435,36 @@ function Dashboard({
                 </span>
               </div>
 
-              <div className="analysis-status">
-                <div>
-                  <strong>Current Threat Level</strong>
-                  <p>{operatorFieldValue(threatAnalysis.currentThreatLevel)}</p>
-                </div>
-              </div>
+              <div className="analysis-visual-row">
+                <Gauge
+                  label="Current Threat Level"
+                  value={Number(threatAnalysis.currentThreatLevel ?? 0)}
+                  min={0}
+                  max={100}
+                  unit="%"
+                  helperText="Live threat score"
+                />
 
-              <div className="analysis-field-list">
-                <div className="analysis-field">
-                  <span>Primary Trigger</span>
-                  <strong>{operatorFieldValue(threatAnalysis.primaryTrigger)}</strong>
-                </div>
+                <div className="analysis-status-stack">
+                  <div className="analysis-field">
+                    <span>Primary Trigger</span>
+                    <strong>{operatorFieldValue(threatAnalysis.primaryTrigger)}</strong>
+                  </div>
 
-                <div className="analysis-field">
-                  <span>Affected Archive</span>
-                  <strong>{operatorFieldValue(threatAnalysis.affectedArchive)}</strong>
-                </div>
+                  <div className="analysis-field">
+                    <span>Affected Archive</span>
+                    <strong>{operatorFieldValue(threatAnalysis.affectedArchive)}</strong>
+                  </div>
 
-                <div className="analysis-field">
-                  <span>Recommended Immediate Action</span>
-                  <strong>{operatorFieldValue(threatAnalysis.recommendedImmediateAction)}</strong>
-                </div>
+                  <div className="analysis-field">
+                    <span>System Decision</span>
+                    <strong>{operatorFieldValue(threatAnalysis.systemDecision)}</strong>
+                  </div>
 
-                <div className="analysis-field">
-                  <span>System Decision</span>
-                  <strong>{operatorFieldValue(threatAnalysis.systemDecision)}</strong>
-                </div>
-
-                <div className="analysis-field analysis-field-wide">
-                  <span>Operator Action Required</span>
-                  <strong>{operatorFieldValue(threatAnalysis.operatorActionRequired)}</strong>
+                  <div className="analysis-field analysis-field-wide">
+                    <span>Operator Action Required</span>
+                    <strong>{operatorFieldValue(threatAnalysis.operatorActionRequired)}</strong>
+                  </div>
                 </div>
               </div>
             </section>

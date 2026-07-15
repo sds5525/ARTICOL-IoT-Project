@@ -1118,6 +1118,11 @@ button {
   font-size: 13px;
   font-weight: 900;
 }
+.gallery-card.critical.restricted .gallery-status,
+.gallery-card.critical .gallery-status {
+  background: rgba(255, 76, 94, 0.16);
+  color: #ff7480;
+}
 
 .gallery-identity h3 {
   margin: 0;
@@ -1129,65 +1134,14 @@ button {
   color: #788fac;
   font-size: 11px;
 }
+  color: #788fac;
+  font-size: 11px;
+}
 
 .gallery-status {
   padding: 6px 9px;
   border-radius: 999px;
   font-size: 9px;
-  font-weight: 900;
-  letter-spacing: 1px;
-}
-
-.gallery-status.safe {
-  background: rgba(76, 222, 159, 0.12);
-  color: #61e7aa;
-}
-
-.gallery-status.warning {
-  background: rgba(255, 184, 73, 0.13);
-  color: #ffc261;
-}
-
-.gallery-status.critical {
-  background: rgba(255, 76, 94, 0.14);
-  color: #ff6c79;
-}
-
-.gallery-status.offline {
-  background: rgba(112, 128, 146, 0.15);
-  color: #98a4b1;
-}
-
-.access-mode-banner {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 13px;
-  padding: 10px 12px;
-  border-radius: 11px;
-}
-
-.access-mode-banner > span {
-  font-size: 20px;
-}
-
-.access-mode-banner strong,
-.access-mode-banner small {
-  display: block;
-}
-
-.access-mode-banner strong {
-  font-size: 10px;
-  letter-spacing: 1px;
-}
-
-.access-mode-banner small {
-  margin-top: 3px;
-  font-size: 9px;
-}
-
-.access-mode-banner.restricted {
-  border: 1px solid rgba(189, 132, 255, 0.25);
   background: rgba(154, 92, 224, 0.1);
   color: #caa5f5;
 }
@@ -2125,6 +2079,18 @@ button {
   line-height: 1.45;
 }
 
+.analysis-visual-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.analysis-status-stack {
+  display: grid;
+  gap: 10px;
+}
+
 .analysis-observations {
   margin-top: 13px;
 }
@@ -3040,6 +3006,14 @@ button {
 
 .gallery-sensor-card.esp .sensor-visual {
   color: #58e2a2;
+}
+
+.gallery-sensor-card.sound .sensor-visual {
+  color: #ffbb4d;
+}
+
+.gallery-sensor-card.sound.active .sensor-visual {
+  background: rgba(255, 184, 77, 0.12);
 }
 
 .signal-wave-one {

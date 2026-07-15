@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 function ToggleSwitch({
     checked,
     onChange,
@@ -34,6 +36,25 @@ function ToggleSwitch({
     onLockdownChange,
     onAcknowledge,
   }) {
+    const [acknowledgeDisabled, setAcknowledgeDisabled] = useState(false);
+
+    useEffect(() => {
+      if (!acknowledgeDisabled) {
+        return undefined;
+      }
+
+      const timeoutId = setTimeout(() => {
+        setAcknowledgeDisabled(false);
+      }, 5000);
+
+      return () => clearTimeout(timeoutId);
+    }, [acknowledgeDisabled]);
+
+    function handleAcknowledgeClick() {
+      setAcknowledgeDisabled(true);
+      onAcknowledge();
+    }
+
     return (
       <section className="manual-controls-panel">
         <div className="manual-controls-header">
@@ -83,8 +104,8 @@ function ToggleSwitch({
           <button
             type="button"
             className="acknowledge-control"
-            onClick={onAcknowledge}
-            disabled={alertAcknowledged}
+            onClick={handleAcknowledgeClick}
+            disabled={acknowledgeDisabled}
           >
             {alertAcknowledged
               ? "Alert Acknowledged"

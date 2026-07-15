@@ -4,7 +4,6 @@ project: {
   subtitle: "Intelligent Artifact Archive Security System",
   descriptor: "Artifact Intelligence & Threat Correlation Operations Layer",
   location: "Bengaluru Archive Facility, India",
-  mode: "DEMO MODE",
 },
   
     system: {

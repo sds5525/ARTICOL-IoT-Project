@@ -7,101 +7,57 @@ import GalleryPage from "./pages/GalleryPage";
 import { museumData } from "./data/dummyData";
 
 function App() {
-  const [selectedGalleryId, setSelectedGalleryId] =
-    useState(null);
+  const [selectedGalleryId, setSelectedGalleryId] = useState(null);
 
-  const [galleries, setGalleries] = useState(
+  const [galleries, setGalleries] = useState(() =>
     structuredClone(museumData.galleries),
   );
 
   useEffect(() => {
-  async function fetchSensorData() {
-    try {
-      const [archiveA, archiveB, archiveC] =
-        await Promise.all([
-          fetch(
-            "http://localhost:1880/api/archive/A"
-          ).then((r) => r.json()),
-
-          fetch(
-            "http://localhost:1880/api/archive/B"
-          ).then((r) => r.json()),
-
-          fetch(
-            "http://localhost:1880/api/archive/C"
-          ).then((r) => r.json()),
+    async function fetchSensorData() {
+      try {
+        const [archiveA, archiveB, archiveC] = await Promise.all([
+          fetch("http://localhost:1880/api/archive/A").then((r) => r.json()),
+          fetch("http://localhost:1880/api/archive/B").then((r) => r.json()),
+          fetch("http://localhost:1880/api/archive/C").then((r) => r.json()),
         ]);
 
-      setGalleries((currentGalleries) =>
-        currentGalleries.map((gallery) => {
-          let sensorData;
+        const sensorDataByGallery = {
+          A: archiveA,
+          B: archiveB,
+          C: archiveC,
+        };
 
-          if (gallery.id === "A")
-            sensorData = archiveA;
+        setGalleries((currentGalleries) =>
+          currentGalleries.map((gallery) => {
+            const sensorData = sensorDataByGallery[gallery.id];
 
-          if (gallery.id === "B")
-            sensorData = archiveB;
-
-          if (gallery.id === "C")
-            sensorData = archiveC;
-
-          return {
-            ...gallery,
-
-            temperature: Number(
-              sensorData.temperature || 0
-            ),
-
-            humidity: Number(
-              sensorData.humidity || 0
-            ),
-
-            motion:
-              Number(
-                sensorData.motion || 0
-              ) === 1,
-
-            distance: Number(
-              sensorData.distance || 0
-            ),
-
-            status: sensorData.status,
-
-            threatScore:
-              sensorData.threatScore,
-
-            artifactMoved:
-              sensorData.artifactMoved,
-
-            espOnline:
-              sensorData.espOnline,
-
-            accessMode:
-              sensorData.accessMode ||
-              gallery.accessMode,
-
-            threatFactors:
-              sensorData.threatFactors || [],
-          };
-        })
-      );
-    } catch (error) {
-      console.error(
-        "Error fetching sensor data:",
-        error
-      );
+            return {
+              ...gallery,
+              temperature: Number(sensorData.temperature || 0),
+              humidity: Number(sensorData.humidity || 0),
+              motion: Number(sensorData.motion || 0) === 1,
+              distance: Number(sensorData.distance || 0),
+              status: sensorData.status,
+              threatScore: sensorData.threatScore,
+              artifactMoved: sensorData.artifactMoved,
+              espOnline: sensorData.espOnline,
+              accessMode: sensorData.accessMode || gallery.accessMode,
+              threatFactors: sensorData.threatFactors || [],
+            };
+          }),
+        );
+      } catch (error) {
+        console.error("Error fetching sensor data:", error);
+      }
     }
-  }
 
-  fetchSensorData();
+    fetchSensorData();
 
-  const interval = setInterval(
-    fetchSensorData,
-    2000
-  );
+    const interval = setInterval(fetchSensorData, 2000);
 
-  return () => clearInterval(interval);
-}, []);
+    return () => clearInterval(interval);
+  }, []);
 
   function openGallery(galleryId) {
     setSelectedGalleryId(galleryId);

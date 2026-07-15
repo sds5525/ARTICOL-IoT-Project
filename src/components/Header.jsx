@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-function Header({ project, systemStatus }) {
+function Header({ project }) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
@@ -41,15 +41,6 @@ function Header({ project, systemStatus }) {
           <strong>{formattedTime}</strong>
           <span>{formattedDate}</span>
           <small>{project.location}</small>
-        </div>
-
-        <div className="system-mode-block">
-          <span className="system-mode-label">ARTICOL OS</span>
-
-          <div className={`system-mode ${systemStatus.toLowerCase()}`}>
-            <span className="mode-dot" />
-            {project.mode}
-          </div>
         </div>
       </div>
     </header>

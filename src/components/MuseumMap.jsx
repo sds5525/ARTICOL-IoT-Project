@@ -1,6 +1,8 @@
 import GalleryCard from "./GalleryCard";
 
 function MuseumMap({ galleries, onOpenGallery }) {
+  const gallerySlots = ["A", "B", "C"];
+
   return (
     <section className="museum-map-panel">
       <div className="museum-map-header">
@@ -43,26 +45,17 @@ function MuseumMap({ galleries, onOpenGallery }) {
           <span>ACCESS PATH</span>
         </div>
 
-        <div className="gallery-position gallery-position-a">
-          <GalleryCard
-            gallery={galleries.find((gallery) => gallery.id === "A")}
-            onOpen={onOpenGallery}
-          />
-        </div>
-
-        <div className="gallery-position gallery-position-b">
-          <GalleryCard
-            gallery={galleries.find((gallery) => gallery.id === "B")}
-            onOpen={onOpenGallery}
-          />
-        </div>
-
-        <div className="gallery-position gallery-position-c">
-          <GalleryCard
-            gallery={galleries.find((gallery) => gallery.id === "C")}
-            onOpen={onOpenGallery}
-          />
-        </div>
+        {gallerySlots.map((galleryId) => (
+          <div
+            key={galleryId}
+            className={`gallery-position gallery-position-${galleryId.toLowerCase()}`}
+          >
+            <GalleryCard
+              gallery={galleries.find((gallery) => gallery.id === galleryId)}
+              onOpen={onOpenGallery}
+            />
+          </div>
+        ))}
 
         <div className="museum-entry">
           <span>VISITOR ENTRY</span>

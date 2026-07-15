@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Header from "../components/Header";
 import Gauge from "../components/Gauge";
 import MuseumMap from "../components/MuseumMap";
@@ -10,15 +10,12 @@ function Dashboard({
   setGalleries,
   onOpenGallery,
 }) {
-
   const [galleryCRestricted, setGalleryCRestricted] = useState(
     museumData.galleryCRestricted,
   );
 
   const [lockdown, setLockdown] = useState(false);
   const [alertAcknowledged, setAlertAcknowledged] = useState(false);
-
-  
 
   const overallThreat = useMemo(() => {
     return Math.max(...galleries.map((gallery) => gallery.threatScore));
@@ -55,45 +52,55 @@ function Dashboard({
       0,
     ) / galleries.length;
 
-  async function handleGalleryCModeChange(
-  restricted,
-) {
-  setGalleryCRestricted(restricted);
+  const activeIncidentMessage = alertAcknowledged
+    ? "Alert acknowledged"
+    : "Awaiting operator review";
 
-  try {
-    await fetch(
-      "http://localhost:1880/api/galleryC/mode",
-      {
+  const galleryCModeLabel = galleryCRestricted
+    ? "RESTRICTED"
+    : "STANDARD";
+
+  const overallStatusMessage =
+    overallStatus === "SAFE"
+      ? "Normal archive security conditions"
+      : overallStatus === "WARNING"
+        ? "Suspicious archive activity requires monitoring"
+        : "Immediate archive-security response required";
+
+  const onlineControllerCount = galleries.filter(
+    (gallery) => gallery.espOnline,
+  ).length;
+
+  async function handleGalleryCModeChange(restricted) {
+    setGalleryCRestricted(restricted);
+
+    try {
+      await fetch("http://localhost:1880/api/galleryC/mode", {
         method: "POST",
 
         headers: {
-          "Content-Type":
-            "application/json",
+          "Content-Type": "application/json",
         },
 
         body: JSON.stringify({
           restricted,
         }),
-      },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+
+    setGalleries((currentGalleries) =>
+      currentGalleries.map((gallery) =>
+        gallery.id === "C"
+          ? {
+              ...gallery,
+              accessMode: restricted ? "RESTRICTED" : "STANDARD",
+            }
+          : gallery,
+      ),
     );
-  } catch (error) {
-    console.error(error);
   }
-
-  setGalleries((currentGalleries) =>
-    currentGalleries.map((gallery) =>
-      gallery.id === "C"
-        ? {
-            ...gallery,
-
-            accessMode: restricted
-              ? "RESTRICTED"
-              : "STANDARD",
-          }
-        : gallery,
-    ),
-  );
-}
 
   function handleLockdownChange(enabled) {
     setLockdown(enabled);
@@ -125,20 +132,17 @@ function Dashboard({
   }
 
   function resetDashboard() {
-  setGalleryCRestricted(
-    museumData.galleryCRestricted,
-  );
+    setGalleryCRestricted(museumData.galleryCRestricted);
 
-  setLockdown(false);
+    setLockdown(false);
 
-  setAlertAcknowledged(false);
-}
+    setAlertAcknowledged(false);
+  }
 
   return (
     <div className="articol-dashboard">
       <Header
         project={museumData.project}
-        systemStatus={overallStatus}
       />
 
       <main className="articol-main">
@@ -173,16 +177,7 @@ function Dashboard({
               />
             </div>
 
-            <p>
-              {overallStatus === "SAFE" &&
-                "Normal archive security conditions"}
-
-              {overallStatus === "WARNING" &&
-                "Suspicious archive activity requires monitoring"}
-
-              {overallStatus === "CRITICAL" &&
-                "Immediate archive-security response required"}
-            </p>
+            <p>{overallStatusMessage}</p>
           </div>
         </section>
 
@@ -233,9 +228,7 @@ function Dashboard({
               <h3>{activeIncidents}</h3>
 
               <small>
-                {alertAcknowledged
-                  ? "Alert acknowledged"
-                  : "Awaiting operator review"}
+                {activeIncidentMessage}
               </small>
             </div>
           </article>
@@ -249,7 +242,7 @@ function Dashboard({
               <p>Vault C Access</p>
 
               <h3 className="gallery-mode-text">
-                {galleryCRestricted ? "RESTRICTED" : "STANDARD"}
+                {galleryCModeLabel}
               </h3>
 
               <small>
@@ -313,11 +306,7 @@ function Dashboard({
                 </div>
 
                 <span className="controller-count">
-                  {
-                    galleries.filter(
-                      (gallery) => gallery.espOnline,
-                    ).length
-                  }
+                  {onlineControllerCount}
                   /{galleries.length} ONLINE
                 </span>
               </div>

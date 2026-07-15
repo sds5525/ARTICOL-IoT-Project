@@ -26,6 +26,7 @@ function createInitialGalleries() {
     espOnline: false,
     lastUpdateTime: null,
     threatFactors: [],
+    recentEvents: [],
   }));
 }
 
@@ -40,21 +41,39 @@ function createEmptyThreatAnalysis() {
   };
 }
 
+function deriveThreatAnalysis(galleries) {
+  if (!galleries.length) {
+    return createEmptyThreatAnalysis();
+  }
+
+  const mostThreatenedGallery = galleries.reduce((highest, gallery) =>
+    gallery.threatScore > highest.threatScore ? gallery : highest,
+  );
+
+  const dominantFactor = mostThreatenedGallery.threatFactors[0]?.label;
+
+  return {
+    currentThreatLevel: `${Math.max(...galleries.map((gallery) => gallery.threatScore))}/100`,
+    primaryTrigger: dominantFactor || "Waiting for Node-RED...",
+    affectedArchive: mostThreatenedGallery.name || "Waiting for Node-RED...",
+    recommendedImmediateAction:
+      mostThreatenedGallery.status === "CRITICAL"
+        ? "Immediate operator intervention"
+        : "Monitor live archive conditions",
+    systemDecision: mostThreatenedGallery.status || "Waiting for Node-RED...",
+    operatorActionRequired:
+      mostThreatenedGallery.status === "SAFE"
+        ? "No action required"
+        : `Review ${mostThreatenedGallery.name}`,
+  };
+}
+
 function App() {
   const [selectedGalleryId, setSelectedGalleryId] = useState(null);
   const [criticalLatched, setCriticalLatched] = useState(false);
   const [alertAcknowledged, setAlertAcknowledged] = useState(false);
 
   const [galleries, setGalleries] = useState(createInitialGalleries);
-  const [systemEvents, setSystemEvents] = useState([]);
-  const [galleryEventsById, setGalleryEventsById] = useState({
-    A: [],
-    B: [],
-    C: [],
-  });
-  const [threatAnalysis, setThreatAnalysis] = useState(
-    createEmptyThreatAnalysis,
-  );
 
   useEffect(() => {
     async function fetchSensorData() {
@@ -91,6 +110,9 @@ function App() {
               espOnline: sensorData.espOnline,
               accessMode: sensorData.accessMode || gallery.accessMode,
               threatFactors: sensorData.threatFactors || [],
+              recentEvents: Array.isArray(sensorData.recentEvents)
+                ? sensorData.recentEvents
+                : gallery.recentEvents,
               lastUpdateTime:
                 sensorData.lastUpdateTime ||
                 sensorData.updatedAt ||
@@ -116,53 +138,10 @@ function App() {
       }
     }
 
-    async function fetchEventData() {
-      try {
-        const response = await fetch("http://localhost:1880/api/events");
-
-        if (!response.ok) {
-          return;
-        }
-
-        const payload = await response.json();
-
-        setSystemEvents(Array.isArray(payload.systemEvents) ? payload.systemEvents : []);
-
-        const galleryEventsSource =
-          payload.galleryEventsById || payload.recentEventsByGallery || {};
-
-        setGalleryEventsById({
-          A: Array.isArray(galleryEventsSource.A) ? galleryEventsSource.A : [],
-          B: Array.isArray(galleryEventsSource.B) ? galleryEventsSource.B : [],
-          C: Array.isArray(galleryEventsSource.C) ? galleryEventsSource.C : [],
-        });
-
-        setThreatAnalysis(
-          payload.threatAnalysis && typeof payload.threatAnalysis === "object"
-            ? {
-                currentThreatLevel:
-                  payload.threatAnalysis.currentThreatLevel ?? null,
-                primaryTrigger: payload.threatAnalysis.primaryTrigger ?? null,
-                affectedArchive: payload.threatAnalysis.affectedArchive ?? null,
-                recommendedImmediateAction:
-                  payload.threatAnalysis.recommendedImmediateAction ?? null,
-                systemDecision: payload.threatAnalysis.systemDecision ?? null,
-                operatorActionRequired:
-                  payload.threatAnalysis.operatorActionRequired ?? null,
-              }
-            : createEmptyThreatAnalysis(),
-        );
-      } catch {
-        return;
-      }
-    }
-
     fetchSensorData();
-    fetchEventData();
 
     const interval = setInterval(() => {
       fetchSensorData();
-      fetchEventData();
     }, 2000);
 
     return () => clearInterval(interval);
@@ -191,11 +170,17 @@ function App() {
       gallery.id === selectedGalleryId,
   );
 
+  const systemEvents = galleries.flatMap((gallery) =>
+    Array.isArray(gallery.recentEvents) ? gallery.recentEvents : [],
+  );
+
+  const threatAnalysis = deriveThreatAnalysis(galleries);
+
   if (selectedGalleryId && selectedGallery) {
     return (
       <GalleryPage
         gallery={selectedGallery}
-        recentEvents={galleryEventsById[selectedGalleryId] || []}
+        recentEvents={selectedGallery.recentEvents || []}
         onBack={closeGallery}
       />
     );

@@ -8,6 +8,8 @@ import { museumData } from "../data/dummyData";
 function Dashboard({
   galleries,
   setGalleries,
+  lockdown,
+  setLockdown,
   criticalLatched,
   setCriticalLatched,
   alertAcknowledged,
@@ -19,8 +21,6 @@ function Dashboard({
   const [galleryCRestricted, setGalleryCRestricted] = useState(
     museumData.galleryCRestricted,
   );
-
-  const [lockdown, setLockdown] = useState(false);
 
   const overallThreat = useMemo(() => {
     return Math.max(...galleries.map((gallery) => gallery.threatScore));
@@ -124,9 +124,6 @@ function Dashboard({
     if (enabled) {
       setCriticalLatched(true);
       setAlertAcknowledged(false);
-    }
-
-    if (enabled) {
       setGalleries((currentGalleries) =>
         currentGalleries.map((gallery) => ({
           ...gallery,
@@ -415,8 +412,9 @@ function Dashboard({
                 handleLockdownChange
               }
               onAcknowledge={() => {
+                setLockdown(false);
                 setCriticalLatched(false);
-                setAlertAcknowledged(true)
+                setAlertAcknowledged(true);
               }}
             />
 

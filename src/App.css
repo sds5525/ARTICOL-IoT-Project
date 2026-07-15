@@ -1081,6 +1081,17 @@ button {
     0 0 24px rgba(162, 102, 240, 0.1);
 }
 
+.gallery-card.critical.restricted {
+  border-color: rgba(255, 76, 94, 0.8);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(56, 18, 26, 0.98),
+      rgba(24, 12, 18, 0.98)
+    );
+  box-shadow: 0 0 28px rgba(255, 76, 94, 0.12);
+}
+
 .gallery-card-top {
   display: flex;
   align-items: flex-start;

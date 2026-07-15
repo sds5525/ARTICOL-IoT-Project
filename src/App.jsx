@@ -72,6 +72,7 @@ function App() {
   const [selectedGalleryId, setSelectedGalleryId] = useState(null);
   const [criticalLatched, setCriticalLatched] = useState(false);
   const [alertAcknowledged, setAlertAcknowledged] = useState(false);
+  const [lockdown, setLockdown] = useState(false);
 
   const [galleries, setGalleries] = useState(createInitialGalleries);
 
@@ -95,10 +96,19 @@ function App() {
             const sensorData = sensorDataByGallery[gallery.id];
 
             if (!sensorData) {
-              return gallery;
+              if (!lockdown) {
+                return gallery;
+              }
+
+              return {
+                ...gallery,
+                status: "CRITICAL",
+                threatScore: Math.max(gallery.threatScore, 90),
+                doorOpen: false,
+              };
             }
 
-            return {
+            const nextGallery = {
               ...gallery,
               temperature: Number(sensorData.temperature || 0),
               humidity: Number(sensorData.humidity || 0),
@@ -119,6 +129,17 @@ function App() {
                 sensorData.timestamp ||
                 gallery.lastUpdateTime,
             };
+
+            if (lockdown) {
+              return {
+                ...nextGallery,
+                status: "CRITICAL",
+                threatScore: Math.max(Number(nextGallery.threatScore || 0), 90),
+                doorOpen: false,
+              };
+            }
+
+            return nextGallery;
           }),
         );
 
@@ -145,7 +166,7 @@ function App() {
     }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [lockdown]);
 
   function openGallery(galleryId) {
     setSelectedGalleryId(galleryId);
@@ -190,6 +211,8 @@ function App() {
     <Dashboard
       galleries={galleries}
       setGalleries={setGalleries}
+        lockdown={lockdown}
+        setLockdown={setLockdown}
       criticalLatched={criticalLatched}
       setCriticalLatched={setCriticalLatched}
       alertAcknowledged={alertAcknowledged}

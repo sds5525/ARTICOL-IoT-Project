@@ -1,10 +1,12 @@
 function GalleryCard({ gallery, onOpen }) {
-  const statusClass = gallery.espOnline
+  const statusClass = gallery.status === "CRITICAL"
+    ? "critical"
+    : gallery.espOnline
     ? gallery.status.toLowerCase()
     : "offline";
 
   const isRestricted = gallery.accessMode === "RESTRICTED";
-  const galleryStatusLabel = gallery.espOnline ? gallery.status : "OFFLINE";
+  const galleryStatusLabel = gallery.status === "CRITICAL" ? "CRITICAL" : (gallery.espOnline ? gallery.status : "OFFLINE");
   const accessModeLabel = isRestricted ? "RESTRICTED" : "PUBLIC";
   const accessModeDescription = isRestricted
     ? "Authorized only"

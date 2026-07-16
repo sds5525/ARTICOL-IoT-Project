@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Header from "../components/Header";
 import Gauge from "../components/Gauge";
 import MuseumMap from "../components/MuseumMap";
@@ -24,9 +24,30 @@ function Dashboard({
     museumData.galleryCRestricted,
   );
 
-  const overallThreat = useMemo(() => {
-    return Math.max(...galleries.map((gallery) => gallery.threatScore));
+  const [hasInitializedMode, setHasInitializedMode] = useState(false);
+
+  useEffect(() => {
+    if (hasReceivedLiveData && !hasInitializedMode) {
+      const galleryC = galleries.find((g) => g.id === "C");
+      if (galleryC) {
+        setTimeout(() => {
+          setGalleryCRestricted(galleryC.accessMode === "RESTRICTED");
+          setHasInitializedMode(true);
+        }, 0);
+      }
+    }
+  }, [hasReceivedLiveData, galleries, hasInitializedMode]);
+
+  const liveMaximumThreat = useMemo(() => {
+    return Math.max(
+      0,
+      ...galleries.map((gallery) => Number(gallery.threatScore ?? 0)),
+    );
   }, [galleries]);
+
+  const displayedOverallThreat = useMemo(() => {
+    return lockdown ? 100 : liveMaximumThreat;
+  }, [lockdown, liveMaximumThreat]);
 
   const overallStatus = useMemo(() => {
     if (!hasReceivedLiveData) {
@@ -41,12 +62,34 @@ function Dashboard({
       (gallery) => gallery.status === "WARNING",
     );
 
-    if (overallThreat >= 35 || hasWarningGallery) {
+    if (displayedOverallThreat >= 35 || hasWarningGallery) {
       return "WARNING";
     }
 
     return "SAFE";
-  }, [criticalLatched, galleries, hasReceivedLiveData, lockdown, overallThreat]);
+  }, [criticalLatched, galleries, hasReceivedLiveData, lockdown, displayedOverallThreat]);
+
+  const displayGalleries = useMemo(
+    () =>
+      galleries.map((gallery) => {
+        const displayGallery = {
+          ...gallery,
+          accessMode:
+            gallery.id === "C"
+              ? galleryCRestricted
+                ? "RESTRICTED"
+                : "PUBLIC"
+              : gallery.accessMode,
+        };
+
+        if (lockdown) {
+          displayGallery.status = "CRITICAL";
+        }
+
+        return displayGallery;
+      }),
+    [galleries, galleryCRestricted, lockdown],
+  );
 
   const activeIncidents = galleries.filter(
     (gallery) =>
@@ -71,7 +114,7 @@ function Dashboard({
 
   const galleryCModeLabel = galleryCRestricted
     ? "RESTRICTED"
-    : "STANDARD";
+    : "PUBLIC";
 
   const overallStatusMessage =
     overallStatus === "CONNECTING"
@@ -84,17 +127,68 @@ function Dashboard({
 
   const operatorFieldValue = (value) => value ?? "--";
 
-  const hasSystemEvents = systemEvents.length > 0;
+  const latestSystemEvents = useMemo(() => {
+    const sorted = [...systemEvents].sort((a, b) => {
+      const aTimestamp =
+        a.timestamp ||
+        a.createdAt ||
+        a.updatedAt ||
+        a.isoTime ||
+        null;
+
+      const bTimestamp =
+        b.timestamp ||
+        b.createdAt ||
+        b.updatedAt ||
+        b.isoTime ||
+        null;
+
+      if (aTimestamp && bTimestamp) {
+        return new Date(bTimestamp).getTime() -
+          new Date(aTimestamp).getTime();
+      }
+
+      return 0;
+    });
+
+    const hasMachineTimestamps = sorted.some(
+      (event) =>
+        event.timestamp ||
+        event.createdAt ||
+        event.updatedAt ||
+        event.isoTime,
+    );
+
+    const orderedEvents = hasMachineTimestamps
+      ? sorted
+      : [...systemEvents].reverse();
+
+    return orderedEvents.slice(0, 3);
+  }, [systemEvents]);
+
+  const hasSystemEvents = latestSystemEvents.length > 0;
 
   const onlineControllerCount = galleries.filter(
     (gallery) => gallery.espOnline,
   ).length;
 
   async function handleGalleryCModeChange(restricted) {
+    const previousRestricted = galleryCRestricted;
     setGalleryCRestricted(restricted);
 
+    setGalleries((currentGalleries) =>
+      currentGalleries.map((gallery) =>
+        gallery.id === "C"
+          ? {
+              ...gallery,
+              accessMode: restricted ? "RESTRICTED" : "PUBLIC",
+            }
+          : gallery,
+        ),
+    );
+
     try {
-      await fetch("http://localhost:1880/api/galleryC/mode", {
+      const response = await fetch("http://localhost:1880/api/galleryC/mode", {
         method: "POST",
 
         headers: {
@@ -105,20 +199,25 @@ function Dashboard({
           restricted,
         }),
       });
+      if (!response.ok) {
+        throw new Error(`Server returned status: ${response.status}`);
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error setting Vault C access mode:", error);
+      if (error.message && error.message.startsWith("Server returned status")) {
+        setGalleryCRestricted(previousRestricted);
+        setGalleries((currentGalleries) =>
+          currentGalleries.map((gallery) =>
+            gallery.id === "C"
+              ? {
+                  ...gallery,
+                  accessMode: previousRestricted ? "RESTRICTED" : "PUBLIC",
+                }
+              : gallery,
+          ),
+        );
+      }
     }
-
-    setGalleries((currentGalleries) =>
-      currentGalleries.map((gallery) =>
-        gallery.id === "C"
-          ? {
-              ...gallery,
-              accessMode: restricted ? "RESTRICTED" : "STANDARD",
-            }
-          : gallery,
-      ),
-    );
   }
 
   function handleLockdownChange(enabled) {
@@ -151,7 +250,7 @@ function Dashboard({
               <span>ARTICOL Risk Index</span>
 
               <strong>
-                {overallThreat}
+                {displayedOverallThreat}
                 <small>/100</small>
               </strong>
             </div>
@@ -159,7 +258,7 @@ function Dashboard({
             <div className="risk-index-track">
               <div
                 className="risk-index-fill"
-                style={{ width: `${overallThreat}%` }}
+                style={{ width: `${displayedOverallThreat}%` }}
               />
             </div>
 
@@ -181,7 +280,7 @@ function Dashboard({
               </h3>
 
               <small>
-                Maximum threat score: {overallThreat}
+                Maximum threat score: {displayedOverallThreat}
               </small>
             </div>
           </article>
@@ -234,7 +333,7 @@ function Dashboard({
               <small>
                 {galleryCRestricted
                   ? "Authorized archive personnel only"
-                  : "Standard archive access enabled"}
+                  : "Public archive access enabled"}
               </small>
             </div>
           </article>
@@ -243,7 +342,7 @@ function Dashboard({
         <section className="dashboard-workspace">
           <div className="dashboard-main-column">
             <MuseumMap
-              galleries={galleries}
+              galleries={displayGalleries}
               onOpenGallery={onOpenGallery}
             />
 
@@ -265,7 +364,7 @@ function Dashboard({
 
               <div className="event-stream-list">
                 {hasSystemEvents ? (
-                  systemEvents.map((event, index) => (
+                  latestSystemEvents.map((event, index) => (
                     <article
                       className="stream-event"
                       key={`${event.time ?? index}-${event.title ?? "event"}-${index}`}
@@ -402,6 +501,9 @@ function Dashboard({
               onAcknowledge={() => {
                 setCriticalLatched(false);
                 setAlertAcknowledged(true);
+                if (lockdown) {
+                  handleLockdownChange(false);
+                }
               }}
             />
 
@@ -424,7 +526,7 @@ function Dashboard({
               <div className="analysis-visual-row">
                 <Gauge
                   label="Current Threat Level"
-                  value={Number(threatAnalysis.currentThreatLevel ?? 0)}
+                  value={displayedOverallThreat}
                   min={0}
                   max={100}
                   unit="%"

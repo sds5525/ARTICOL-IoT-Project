@@ -69,7 +69,7 @@ function ToggleSwitch({
         <ToggleSwitch
           checked={galleryCRestricted}
           onChange={onGalleryCModeChange}
-          label="Gallery C access mode"
+          label="Vault C access mode"
           activeText="Restricted access enabled"
           inactiveText="Public access enabled"
           tone="purple"
@@ -78,7 +78,7 @@ function ToggleSwitch({
         <ToggleSwitch
           checked={lockdown}
           onChange={onLockdownChange}
-          label="Museum lockdown"
+          label="Archive lockdown"
           activeText="Emergency lockdown active"
           inactiveText="Normal operating mode"
           tone="red"
@@ -86,7 +86,7 @@ function ToggleSwitch({
   
         <div className="manual-control-status">
           <div>
-            <span>Gallery C</span>
+            <span>Vault C</span>
             <strong>
               {galleryCRestricted ? "RESTRICTED" : "PUBLIC"}
             </strong>

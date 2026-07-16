@@ -15,7 +15,7 @@ function createInitialGalleries() {
     accessMode:
       gallery.id === "C" && museumData.galleryCRestricted
         ? "RESTRICTED"
-        : "STANDARD",
+        : "PUBLIC",
     status: "SAFE",
     threatScore: 0,
     temperature: 0,
@@ -82,9 +82,22 @@ function createEmptyEventMap() {
   };
 }
 
+function normalizeAccessMode(value, fallback) {
+  const normalized = String(value ?? "").toUpperCase();
+
+  if (normalized === "RESTRICTED" || normalized === "PUBLIC") {
+    return normalized;
+  }
+
+  return fallback;
+}
+
 function createEventEntry(type, title, description) {
+  const now = new Date();
+
   return {
-    time: new Date().toLocaleTimeString("en-IN", {
+    timestamp: now.toISOString(),
+    time: now.toLocaleTimeString("en-IN", {
       hour: "2-digit",
       minute: "2-digit",
       second: "2-digit",
@@ -278,10 +291,10 @@ function App() {
                 Number(sensorData.soundDigital || 0) === 1,
               distance: Number(sensorData.distance || 0),
               status: sensorData.status,
-              threatScore: sensorData.threatScore,
+              threatScore: Number(sensorData.threatScore ?? 0),
               artifactMoved: sensorData.artifactMoved,
               espOnline: sensorData.espOnline,
-              accessMode: sensorData.accessMode || gallery.accessMode,
+              accessMode: normalizeAccessMode(sensorData.accessMode, gallery.accessMode),
               threatFactors: sensorData.threatFactors || [],
               museumOpen: sensorData.museumOpen,
               roomOccupied: sensorData.roomOccupied,
@@ -321,10 +334,10 @@ function App() {
                 Number(sensorData.soundDigital || 0) === 1,
               distance: Number(sensorData.distance || 0),
               status: sensorData.status,
-              threatScore: Number(sensorData.threatScore || 0),
+              threatScore: Number(sensorData.threatScore ?? 0),
               artifactMoved: sensorData.artifactMoved,
               espOnline: sensorData.espOnline,
-              accessMode: sensorData.accessMode || previousGallery.accessMode,
+              accessMode: normalizeAccessMode(sensorData.accessMode, previousGallery.accessMode),
               threatFactors: sensorData.threatFactors || [],
               museumOpen: sensorData.museumOpen,
               roomOccupied: sensorData.roomOccupied,

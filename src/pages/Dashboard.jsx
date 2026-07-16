@@ -38,37 +38,6 @@ function Dashboard({
     }
   }, [hasReceivedLiveData, galleries, hasInitializedMode]);
 
-  const liveMaximumThreat = useMemo(() => {
-    return Math.max(
-      0,
-      ...galleries.map((gallery) => Number(gallery.threatScore ?? 0)),
-    );
-  }, [galleries]);
-
-  const displayedOverallThreat = useMemo(() => {
-    return lockdown ? 100 : liveMaximumThreat;
-  }, [lockdown, liveMaximumThreat]);
-
-  const overallStatus = useMemo(() => {
-    if (!hasReceivedLiveData) {
-      return "CONNECTING";
-    }
-
-    if (lockdown || criticalLatched) {
-      return "CRITICAL";
-    }
-
-    const hasWarningGallery = galleries.some(
-      (gallery) => gallery.status === "WARNING",
-    );
-
-    if (displayedOverallThreat >= 35 || hasWarningGallery) {
-      return "WARNING";
-    }
-
-    return "SAFE";
-  }, [criticalLatched, galleries, hasReceivedLiveData, lockdown, displayedOverallThreat]);
-
   const displayGalleries = useMemo(
     () =>
       galleries.map((gallery) => {
@@ -84,29 +53,68 @@ function Dashboard({
 
         if (lockdown) {
           displayGallery.status = "CRITICAL";
+        } else if (alertAcknowledged && (displayGallery.status === "CRITICAL" || Number(displayGallery.threatScore ?? 0) >= 70)) {
+          displayGallery.status = "SAFE";
+          displayGallery.threatScore = 0;
+          displayGallery.threatFactors = [];
         }
 
         return displayGallery;
       }),
-    [galleries, galleryCRestricted, lockdown],
+    [galleries, galleryCRestricted, lockdown, alertAcknowledged],
   );
 
-  const activeIncidents = galleries.filter(
-    (gallery) =>
-      gallery.status === "WARNING" || gallery.status === "CRITICAL",
-  ).length;
+  const liveMaximumThreat = useMemo(() => {
+    return Math.max(
+      0,
+      ...displayGalleries.map((gallery) => Number(gallery.threatScore ?? 0)),
+    );
+  }, [displayGalleries]);
 
-  const averageTemperature =
-    galleries.reduce(
+  const displayedOverallThreat = useMemo(() => {
+    return lockdown ? 100 : liveMaximumThreat;
+  }, [lockdown, liveMaximumThreat]);
+
+  const overallStatus = useMemo(() => {
+    if (!hasReceivedLiveData) {
+      return "CONNECTING";
+    }
+
+    if (lockdown || criticalLatched) {
+      return "CRITICAL";
+    }
+
+    const hasWarningGallery = displayGalleries.some(
+      (gallery) => gallery.status === "WARNING",
+    );
+
+    if (displayedOverallThreat >= 35 || hasWarningGallery) {
+      return "WARNING";
+    }
+
+    return "SAFE";
+  }, [criticalLatched, displayGalleries, hasReceivedLiveData, lockdown, displayedOverallThreat]);
+
+  const activeIncidents = useMemo(() => {
+    return displayGalleries.filter(
+      (gallery) =>
+        gallery.status === "WARNING" || gallery.status === "CRITICAL",
+    ).length;
+  }, [displayGalleries]);
+
+  const averageTemperature = useMemo(() => {
+    return displayGalleries.reduce(
       (total, gallery) => total + gallery.temperature,
       0,
-    ) / galleries.length;
+    ) / displayGalleries.length;
+  }, [displayGalleries]);
 
-  const averageHumidity =
-    galleries.reduce(
+  const averageHumidity = useMemo(() => {
+    return displayGalleries.reduce(
       (total, gallery) => total + gallery.humidity,
       0,
-    ) / galleries.length;
+    ) / displayGalleries.length;
+  }, [displayGalleries]);
 
   const activeIncidentMessage = alertAcknowledged
     ? "Alert acknowledged"

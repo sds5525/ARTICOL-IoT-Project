@@ -386,6 +386,8 @@ function App() {
         ) {
           setCriticalLatched(true);
           setAlertAcknowledged(false);
+        } else if (!currentCriticalCondition) {
+          setAlertAcknowledged(false);
         }
 
         previousCriticalConditionRef.current = currentCriticalCondition;

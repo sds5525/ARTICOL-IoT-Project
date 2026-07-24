@@ -35,7 +35,8 @@ function ToggleSwitch({
     onGalleryCModeChange,
     onLockdownChange,
     onAcknowledge,
-  }) {
+    canAcknowledge
+}) {
     const [acknowledgeDisabled, setAcknowledgeDisabled] = useState(false);
 
     useEffect(() => {
@@ -105,11 +106,18 @@ function ToggleSwitch({
             type="button"
             className="acknowledge-control"
             onClick={handleAcknowledgeClick}
-            disabled={acknowledgeDisabled}
+            disabled={
+               acknowledgeDisabled ||
+                !canAcknowledge
+              }
           >
-            {alertAcknowledged
-              ? "Alert Acknowledged"
-              : "Acknowledge Alert"}
+            {
+              !canAcknowledge
+                  ? "Replace artifact first"
+                  : alertAcknowledged
+                      ? "Alert Acknowledged"
+                      : "Acknowledge Alert"
+          }
           </button>
         </div>
       </section>

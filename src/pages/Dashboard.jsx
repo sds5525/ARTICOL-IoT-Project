@@ -228,8 +228,32 @@ function Dashboard({
     }
   }
 
-  function handleLockdownChange(enabled) {
-    setLockdown(enabled);
+  async function handleLockdownChange(enabled) {
+
+      setLockdown(enabled);
+
+      try {
+
+          await fetch(
+              "http://localhost:1880/api/lockdown",
+              {
+                  method: "POST",
+
+                  headers: {
+                      "Content-Type":
+                          "application/json"
+                  },
+
+                  body: JSON.stringify({
+                      enabled
+                  })
+              }
+          );
+
+      } catch (err) {
+
+          console.error(err);
+      }
   }
 
   return (
@@ -506,13 +530,43 @@ function Dashboard({
               onLockdownChange={
                 handleLockdownChange
               }
-              onAcknowledge={() => {
-                setCriticalLatched(false);
-                setAlertAcknowledged(true);
-                if (lockdown) {
-                  handleLockdownChange(false);
+              onAcknowledge={async () => {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            "http://localhost:1880/api/acknowledge",
+                            {
+                                method: "POST"
+                            }
+                        );
+
+                    if (!response.ok) {
+
+                        alert(
+                            "Replace artifact first."
+                        );
+
+                        return;
+                    }
+
+                    setCriticalLatched(false);
+
+                    setAlertAcknowledged(true);
+
+                    setLockdown(false);
+
+                } catch (err) {
+
+                    console.error(err);
                 }
-              }}
+            }}
+              canAcknowledge={
+                !galleries.some(
+                gallery => gallery.artifactMoved
+                )
+              }
             />
 
             <section className="ai-analysis-panel">

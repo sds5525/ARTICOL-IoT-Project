@@ -83,10 +83,6 @@ function GalleryCard({ gallery, onOpen }) {
           🔊 {gallery.soundDetected ? "Sound detected" : "Quiet"}
         </span>
 
-        <span className={gallery.doorOpen ? "active" : ""}>
-          ▣ {gallery.doorOpen ? "Door open" : "Door closed"}
-        </span>
-
         <span className={gallery.artifactMoved ? "active" : ""}>
           ◆ {gallery.artifactMoved ? "Moved" : "Secure"}
         </span>

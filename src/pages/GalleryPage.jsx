@@ -160,18 +160,6 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
                 }
               />
 
-              <SensorCard
-                title="Door Sensor"
-                value={gallery.doorOpen ? "OPEN" : "CLOSED"}
-                icon={gallery.doorOpen ? "🚪" : "▣"}
-                active={gallery.doorOpen}
-                type="door"
-                description={
-                  gallery.doorOpen
-                    ? "The gallery entrance is open."
-                    : "The gallery entrance is secured."
-                }
-              />
 
               <SensorCard
                 title="Artifact Sensor"

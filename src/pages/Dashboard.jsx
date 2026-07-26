@@ -196,7 +196,7 @@ function Dashboard({
     );
 
     try {
-      const response = await fetch("http://localhost:1880/api/galleryC/mode", {
+      const response = await fetch("http://localhost:1880/api/archiveC/mode", {
         method: "POST",
 
         headers: {

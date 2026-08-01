@@ -38,6 +38,28 @@ function Dashboard({
     }
   }, [hasReceivedLiveData, galleries, hasInitializedMode]);
 
+  const hasCriticalOrEmergencyAlert = useMemo(() => {
+    return (
+      lockdown ||
+      criticalLatched ||
+      galleries.some(
+        (gallery) =>
+          gallery.status === "CRITICAL" ||
+          gallery.status === "EMERGENCY" ||
+          gallery.emergency ||
+          gallery.emergencyButton ||
+          Number(gallery.threatScore ?? 0) >= 70,
+      )
+    );
+  }, [lockdown, criticalLatched, galleries]);
+
+  const canAcknowledge = useMemo(() => {
+    if (hasCriticalOrEmergencyAlert) {
+      return true;
+    }
+    return !galleries.some((gallery) => gallery.artifactMoved);
+  }, [hasCriticalOrEmergencyAlert, galleries]);
+
   const displayGalleries = useMemo(
     () =>
       galleries.map((gallery) => {
@@ -53,7 +75,14 @@ function Dashboard({
 
         if (lockdown) {
           displayGallery.status = "CRITICAL";
-        } else if (alertAcknowledged && (displayGallery.status === "CRITICAL" || Number(displayGallery.threatScore ?? 0) >= 70)) {
+        } else if (
+          alertAcknowledged &&
+          (displayGallery.status === "CRITICAL" ||
+            displayGallery.status === "EMERGENCY" ||
+            displayGallery.emergency ||
+            displayGallery.emergencyButton ||
+            Number(displayGallery.threatScore ?? 0) >= 70)
+        ) {
           displayGallery.status = "SAFE";
           displayGallery.threatScore = 0;
           displayGallery.threatFactors = [];
@@ -531,42 +560,22 @@ function Dashboard({
                 handleLockdownChange
               }
               onAcknowledge={async () => {
+                setCriticalLatched(false);
+                setAlertAcknowledged(true);
+                setLockdown(false);
 
                 try {
-
-                    const response =
-                        await fetch(
-                            "http://localhost:1880/api/acknowledge",
-                            {
-                                method: "POST"
-                            }
-                        );
-
-                    if (!response.ok) {
-
-                        alert(
-                            "Replace artifact first."
-                        );
-
-                        return;
-                    }
-
-                    setCriticalLatched(false);
-
-                    setAlertAcknowledged(true);
-
-                    setLockdown(false);
-
+                  await fetch("http://localhost:1880/api/acknowledge", {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                  });
                 } catch (err) {
-
-                    console.error(err);
+                  console.error("Error acknowledging alert with server:", err);
                 }
-            }}
-              canAcknowledge={
-                !galleries.some(
-                gallery => gallery.artifactMoved
-                )
-              }
+              }}
+              canAcknowledge={canAcknowledge}
             />
 
             <section className="ai-analysis-panel">

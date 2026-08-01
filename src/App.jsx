@@ -255,6 +255,9 @@ function App() {
         const currentCriticalCondition = validLiveSensorData.some(
           (sensorData) =>
             sensorData.status === "CRITICAL" ||
+            sensorData.status === "EMERGENCY" ||
+            Boolean(sensorData.emergency) ||
+            Boolean(sensorData.emergencyButton) ||
             Number(sensorData.threatScore || 0) >= 70,
         );
 
@@ -292,7 +295,8 @@ function App() {
               distance: Number(sensorData.distance || 0),
               status: sensorData.status,
               threatScore: Number(sensorData.threatScore ?? 0),
-              artifactMoved: sensorData.artifactMoved,
+              artifactMoved: Boolean(sensorData.artifactMoved),
+              emergency: Boolean(sensorData.emergency || sensorData.emergencyButton),
               espOnline: sensorData.espOnline,
               accessMode: normalizeAccessMode(sensorData.accessMode, gallery.accessMode),
               threatFactors: sensorData.threatFactors || [],

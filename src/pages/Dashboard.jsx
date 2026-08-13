@@ -157,7 +157,7 @@ function Dashboard({
     overallStatus === "CONNECTING"
       ? "Waiting for the first live Node-RED response"
       : overallStatus === "SAFE"
-      ? "Normal archive security conditions"
+      ? "Normal specimen facility conditions"
       : overallStatus === "WARNING"
         ? "Suspicious archive activity requires monitoring"
         : "Immediate archive-security response required";
@@ -295,20 +295,19 @@ function Dashboard({
         <section className="dashboard-intro">
           <div>
             <p className="small-label">
-              CENTRAL ARCHIVE SECURITY OVERVIEW
+              CENTRAL SPECIMEN FACILITY OVERVIEW
             </p>
 
-            <h2>Real-Time Artifact Archive Operations</h2>
+            <h2>Real-Time Specimen Archive Operations</h2>
 
             <p>
-              Monitoring protected artifacts, archive-zone access,
-              environmental conditions and correlated security events.
+              Monitoring specimen access, preservation conditions and correlated security events.
             </p>
           </div>
 
           <div className={`risk-index ${overallStatus.toLowerCase()}`}>
             <div className="risk-index-heading">
-              <span>ARTICOL Risk Index</span>
+              <span>BIOVAULT Risk Index</span>
 
               <strong>
                 {displayedOverallThreat}
@@ -361,7 +360,7 @@ function Dashboard({
               </h3>
 
               <small>
-                Personnel currently inside the archive
+                Authorized personnel currently inside
               </small>
             </div>
           </article>
@@ -385,7 +384,7 @@ function Dashboard({
             </span>
 
             <div>
-              <p>Vault C Access</p>
+              <p>Archive C Access</p>
 
               <h3 className="gallery-mode-text">
                 {galleryCModeLabel}
@@ -393,7 +392,7 @@ function Dashboard({
 
               <small>
                 {galleryCRestricted
-                  ? "Authorized archive personnel only"
+                  ? "Authorized personnel only"
                   : "Public archive access enabled"}
               </small>
             </div>
@@ -414,7 +413,7 @@ function Dashboard({
                     LIVE EVENT STREAM
                   </p>
 
-                  <h2>Archive System Activity</h2>
+                  <h2>Specimen Archive Activity</h2>
                 </div>
 
                 <span className="stream-status">
@@ -452,7 +451,7 @@ function Dashboard({
               <div className="panel-heading">
                 <div>
                   <p className="small-label">DEVICE NETWORK</p>
-                  <h2>Archive Zone Controllers</h2>
+                  <h2>Specimen Archive Controllers</h2>
                 </div>
 
                 <span className="controller-count">
@@ -516,7 +515,7 @@ function Dashboard({
                     ENVIRONMENTAL MONITORING
                   </p>
 
-                  <h2>Archive Conditions</h2>
+                  <h2>Specimen Storage Conditions</h2>
                 </div>
 
                 <span className="live-reading-badge">
@@ -533,7 +532,7 @@ function Dashboard({
                   min={0}
                   max={50}
                   unit="°C"
-                  helperText="Archive facility average"
+                  helperText="Specimen storage average"
                 />
 
                 <Gauge
@@ -544,7 +543,7 @@ function Dashboard({
                   min={0}
                   max={100}
                   unit="%"
-                  helperText="Archive facility average"
+                  helperText="Specimen storage average"
                 />
               </div>
             </section>
@@ -582,7 +581,7 @@ function Dashboard({
               <div className="ai-panel-header">
                 <div>
                   <p className="small-label">
-                    ARTICOL INTELLIGENCE
+                    BIOVAULT INTELLIGENCE
                   </p>
 
                   <h2>Threat Analysis</h2>

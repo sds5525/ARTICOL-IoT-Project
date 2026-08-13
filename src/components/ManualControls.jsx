@@ -70,7 +70,7 @@ function ToggleSwitch({
         <ToggleSwitch
           checked={galleryCRestricted}
           onChange={onGalleryCModeChange}
-          label="Vault C access mode"
+          label="Archive C access mode"
           activeText="Restricted access enabled"
           inactiveText="Public access enabled"
           tone="purple"
@@ -87,7 +87,7 @@ function ToggleSwitch({
   
         <div className="manual-control-status">
           <div>
-            <span>Vault C</span>
+            <span>Archive C</span>
             <strong>
               {galleryCRestricted ? "RESTRICTED" : "PUBLIC"}
             </strong>
@@ -113,7 +113,7 @@ function ToggleSwitch({
           >
             {
               !canAcknowledge
-                  ? "Replace artifact first"
+                  ? "Secure specimen first"
                   : alertAcknowledged
                       ? "Alert Acknowledged"
                       : "Acknowledge Alert"

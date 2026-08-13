@@ -10,7 +10,7 @@ function GalleryCard({ gallery, onOpen }) {
   const accessModeLabel = isRestricted ? "RESTRICTED" : "PUBLIC";
   const accessModeDescription = isRestricted
     ? "Authorized only"
-    : "Visitor access";
+    : "Authorized access";
 
   return (
     <button

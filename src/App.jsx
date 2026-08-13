@@ -176,10 +176,10 @@ function buildArchiveEvents(previousGallery, nextGallery) {
     events.push(
       createEventEntry(
         nextGallery.artifactMoved ? "critical" : "safe",
-        `${nextGallery.name} artifact ${nextGallery.artifactMoved ? "moved" : "secured"}`,
+        `${nextGallery.name} specimen ${nextGallery.artifactMoved ? "moved" : "secured"}`,
         nextGallery.artifactMoved
-          ? "Artifact displacement detected"
-          : "Artifact returned to secure state",
+          ? "Specimen displacement detected"
+          : "Specimen returned to secure state",
       ),
     );
   }

@@ -28,7 +28,7 @@ function Header({ project }) {
   return (
     <header className="articol-header">
       <div className="brand-block">
-        <div className="brand-mark">A</div>
+        <div className="brand-mark">{project.name ? project.name[0] : "B"}</div>
 
         <div>
           <p className="brand-name">{project.name}</p>

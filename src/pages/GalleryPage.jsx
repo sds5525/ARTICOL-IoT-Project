@@ -54,7 +54,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
           ← Back to dashboard
         </button>
 
-        <p>Gallery data is unavailable.</p>
+        <p>Archive data is unavailable.</p>
       </div>
     );
   }
@@ -79,8 +79,8 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
         </button>
 
         <div className="gallery-page-brand">
-          <span>ARTICOL</span>
-          <small>Gallery Intelligence View</small>
+          <span>BIOVAULT</span>
+          <small>Specimen Archive Intelligence View</small>
         </div>
       </header>
 
@@ -109,7 +109,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
                   }`}
                 >
                   {gallery.accessMode === "RESTRICTED" ? "🔒" : "🔓"}
-                  {gallery.accessMode}
+                  {gallery.accessMode === "RESTRICTED" ? "RESTRICTED" : "AUTHORIZED"}
                 </span>
               </div>
             </div>
@@ -117,7 +117,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
 
           <div className={`large-threat-card ${statusClass}`}>
             <div className="large-threat-heading">
-              <span>ARTICOL THREAT SCORE</span>
+              <span>BIOVAULT THREAT SCORE</span>
               <strong>
                 {gallery.threatScore}
                 <small>/100</small>
@@ -140,7 +140,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
             <div className="gallery-section-heading">
               <div>
                 <p className="small-label">LIVE SENSOR NETWORK</p>
-                <h2>Gallery Sensors</h2>
+                <h2>Archive Sensors</h2>
               </div>
 
               <span className="live-reading-badge">LIVE DATA</span>
@@ -162,15 +162,15 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
 
 
               <SensorCard
-                title="Artifact Sensor"
+                title="Specimen Status Sensor"
                 value={gallery.artifactMoved ? "MOVED" : "SECURE"}
                 icon={gallery.artifactMoved ? "⚠" : "◆"}
                 active={gallery.artifactMoved}
                 type="artifact"
                 description={
                   gallery.artifactMoved
-                    ? "Artifact displacement detected."
-                    : "Protected artifact remains secure."
+                    ? "Specimen displacement detected."
+                    : "Specimen storage area remains secure."
                 }
               />
 
@@ -206,7 +206,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
             <div className="gallery-section-heading">
               <div>
                 <p className="small-label">ENVIRONMENT</p>
-                <h2>Room Conditions</h2>
+                <h2>Storage Conditions</h2>
               </div>
             </div>
 
@@ -273,11 +273,11 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
             </div>
 
             <div className="threat-explanation">
-              <span>ARTICOL INTERPRETATION</span>
+              <span>BIOVAULT INTERPRETATION</span>
 
               <p>
                 {gallery.status === "SAFE" &&
-                  "Current sensor readings indicate normal gallery conditions."}
+                  "Current sensor readings indicate normal specimen storage conditions."}
 
                 {gallery.status === "WARNING" &&
                   "One or more sensor readings require continued operator monitoring."}
@@ -291,7 +291,7 @@ function GalleryPage({ gallery, recentEvents = [], onBack }) {
           <section className="gallery-events-panel">
             <div className="gallery-section-heading">
               <div>
-                <p className="small-label">GALLERY HISTORY</p>
+                <p className="small-label">ARCHIVE HISTORY</p>
                 <h2>Recent Events</h2>
               </div>
 

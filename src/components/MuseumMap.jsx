@@ -8,7 +8,7 @@ function MuseumMap({ galleries, onOpenGallery }) {
       <div className="museum-map-header">
         <div>
           <p className="small-label">INTERACTIVE FLOOR VIEW</p>
-          <h2>ARTICOL Archive Security Map</h2>
+          <h2>BIOVAULT Specimen Archive Map</h2>
         </div>
 
         <div className="museum-map-legend">

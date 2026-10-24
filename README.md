@@ -34,15 +34,6 @@ The platform is designed for museum curatorial teams, archive security superviso
 
 ---
 
-## 📸 Demo & Screenshots
-
-![ARTICOL Hero Interface](src/assets/hero.png)
-
-> **Live Demo**: <ADD LIVE DEMO LINK>  
-> *(Optional demonstration video or live deployment link)*
-
----
-
 ## 🛠️ Tech Stack
 
 ### Frontend Command Center
@@ -254,28 +245,3 @@ npm run lint
 - [ ] **Persistent Time-Series Database**: Integrate InfluxDB / TimescaleDB with Grafana for long-term climate preservation analytics.
 - [ ] **MQTTS TLS Encryption**: Upgrade broker communication to TLS (Port 8883) with device certificate authentication.
 - [ ] **Role-Based Access Control (RBAC)**: Implement secure operator authentication and auditable command logs for lockdown triggers.
-
----
-
-## 🤝 Contributing
-
-Contributions, issues, and feature requests are welcome!
-1. Fork the Project.
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`).
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`).
-4. Push to the Branch (`git push origin feature/AmazingFeature`).
-5. Open a Pull Request.
-
----
-
-## 📄 License
-
-This project is licensed under the `<ADD LICENSE e.g. MIT>` License — see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👤 Author & Contact
-
-- **Author**: [@sds5525](https://github.com/sds5525)
-- **Project Repository**: [https://github.com/sds5525/ARTICOL-IoT-Project](https://github.com/sds5525/ARTICOL-IoT-Project)
-- **Facility**: Bengaluru Archive Facility, India

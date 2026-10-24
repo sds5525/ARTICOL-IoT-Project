@@ -1,0 +1,2091 @@
+[
+    {
+        "id": "15bfd3e0a0c981f8",
+        "type": "tab",
+        "label": "Flow 4",
+        "disabled": true,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "8999feb1246fadb0",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-Temp",
+        "topic": "ArticolR1/Temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 220,
+        "wires": [
+            [
+                "20babc20a050fafe"
+            ]
+        ]
+    },
+    {
+        "id": "ad95ead6ee08c196",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-Humid",
+        "topic": "ArticolR1/Humid",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 260,
+        "wires": [
+            [
+                "5eb4bfa262c61dc4"
+            ]
+        ]
+    },
+    {
+        "id": "10185c35afb62439",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-Digital",
+        "topic": "ArticolR1/SDigital",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 340,
+        "wires": [
+            [
+                "110587df1bd4f1c9"
+            ]
+        ]
+    },
+    {
+        "id": "f732ea46be3041f7",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-Dist",
+        "topic": "ArticolR1/Distance",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 380,
+        "wires": [
+            [
+                "5235762ada2225d4"
+            ]
+        ]
+    },
+    {
+        "id": "1a9c69b8cb9bdd4c",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-PIR",
+        "topic": "ArticolR1/PIR",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 420,
+        "wires": [
+            [
+                "b6e7d1498ba3d9b8"
+            ]
+        ]
+    },
+    {
+        "id": "20babc20a050fafe",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.temperature",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 220,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "5eb4bfa262c61dc4",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.humidity",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 260,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "110587df1bd4f1c9",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Digital",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.soundDigital",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 340,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "5235762ada2225d4",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Distance",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.distance",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 380,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "b6e7d1498ba3d9b8",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "PIR",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.motion",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 420,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "c499261aabf6fe84",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "67df29bfbb1f716b",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-Temp",
+        "topic": "ArticolR2/Temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 520,
+        "wires": [
+            [
+                "c011d9d35998d6ed"
+            ]
+        ]
+    },
+    {
+        "id": "2fe60964b974b9d1",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-Humid",
+        "topic": "ArticolR2/Humid",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 560,
+        "wires": [
+            [
+                "cf5bb5717a19f8ec"
+            ]
+        ]
+    },
+    {
+        "id": "f143172939f1b39e",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-Digital",
+        "topic": "ArticolR2/SDigital",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 640,
+        "wires": [
+            [
+                "4b02f95ccb9b2544"
+            ]
+        ]
+    },
+    {
+        "id": "d0a498868bd6b13d",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-Dist",
+        "topic": "ArticolR2/Distance",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 680,
+        "wires": [
+            [
+                "ae562fdb81a6f6e6"
+            ]
+        ]
+    },
+    {
+        "id": "1e757808b1efbd5f",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-PIR",
+        "topic": "ArticolR2/PIR",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 720,
+        "wires": [
+            [
+                "966ea9ccf66a8c5b"
+            ]
+        ]
+    },
+    {
+        "id": "c011d9d35998d6ed",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.temperature",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 520,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "cf5bb5717a19f8ec",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.humidity",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "4b02f95ccb9b2544",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Digital",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.soundDigital",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 640,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "ae562fdb81a6f6e6",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Distance",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.distance",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 680,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "966ea9ccf66a8c5b",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "PIR",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.motion",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 720,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "07d91e9b1498e04d",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3d2774eb6aeb1df0",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-Temp",
+        "topic": "ArticolR3/Temp",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 820,
+        "wires": [
+            [
+                "a4810e828386ea92"
+            ]
+        ]
+    },
+    {
+        "id": "62870cbb55d5b1c3",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-Humid",
+        "topic": "ArticolR3/Humid",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 860,
+        "wires": [
+            [
+                "e00bac63e4ae56e5"
+            ]
+        ]
+    },
+    {
+        "id": "a56680c1ba2a68cb",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-Digital",
+        "topic": "ArticolR3/SDigital",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 940,
+        "wires": [
+            [
+                "fb8a44af8c01fc28"
+            ]
+        ]
+    },
+    {
+        "id": "0681095226ed4dc7",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-Dist",
+        "topic": "ArticolR3/Distance",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 980,
+        "wires": [
+            [
+                "3e32eec048cd38d5"
+            ]
+        ]
+    },
+    {
+        "id": "fee9cffb5e27fb77",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-PIR",
+        "topic": "ArticolR3/PIR",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 230,
+        "y": 1020,
+        "wires": [
+            [
+                "4911ca64b1ec26dc"
+            ]
+        ]
+    },
+    {
+        "id": "a4810e828386ea92",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Temperature",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.temperature",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 370,
+        "y": 820,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "e00bac63e4ae56e5",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Humidity",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.humidity",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 860,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "fb8a44af8c01fc28",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Digital",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.soundDigital",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 940,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "3e32eec048cd38d5",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Distance",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.distance",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 980,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "4911ca64b1ec26dc",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "PIR",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.motion",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 350,
+        "y": 1020,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "ba2321023f993fcd",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 620,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "a038a26eab13889d",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Analog",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveC.soundAnalog",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 900,
+        "wires": [
+            [
+                "ba2321023f993fcd"
+            ]
+        ]
+    },
+    {
+        "id": "58fa2a043a1cb5de",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R3-Analog",
+        "topic": "ArticolR3/SAnalog",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 900,
+        "wires": [
+            [
+                "a038a26eab13889d"
+            ]
+        ]
+    },
+    {
+        "id": "49f43c953daeb7e4",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Analog",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveA.soundAnalog",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 300,
+        "wires": [
+            [
+                "c499261aabf6fe84"
+            ]
+        ]
+    },
+    {
+        "id": "39b0d7cc62f77b90",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R1-Analog",
+        "topic": "ArticolR1/SAnalog",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 300,
+        "wires": [
+            [
+                "49f43c953daeb7e4"
+            ]
+        ]
+    },
+    {
+        "id": "e45cc3b5908b978d",
+        "type": "change",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Analog",
+        "rules": [
+            {
+                "t": "set",
+                "p": "archiveB.soundAnalog",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 360,
+        "y": 600,
+        "wires": [
+            [
+                "07d91e9b1498e04d"
+            ]
+        ]
+    },
+    {
+        "id": "dc07b44a5cc7bbc4",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "R2-Analog",
+        "topic": "ArticolR2/SAnalog",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 220,
+        "y": 600,
+        "wires": [
+            [
+                "e45cc3b5908b978d"
+            ]
+        ]
+    },
+    {
+        "id": "cf252b54254136d5",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive A API",
+        "url": "/api/archive/A",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 610,
+        "y": 320,
+        "wires": [
+            [
+                "fb96c5657de9798e"
+            ]
+        ]
+    },
+    {
+        "id": "e93a7f73bea124a4",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ResponseA",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "fb96c5657de9798e",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive A Data",
+        "func": "const temperature = Number(flow.get(\"archiveA.temperature\") || 0);\nconst humidity = Number(flow.get(\"archiveA.humidity\") || 0);\nconst soundAnalog = Number(flow.get(\"archiveA.soundAnalog\") || 0);\nconst emergency =\n    flow.get(\n        \"emergencyA\"\n    ) || false;\nconst rawSound =\n    flow.get(\n        \"archiveA.soundDigital\"\n    ) || 0;\n\nif (rawSound === 1) {\n    flow.set(\n        \"archiveA.soundTime\",\n        Date.now()\n    );\n}\n\nconst lastlocalSoundTime =\n    flow.get(\n        \"archiveA.soundTime\"\n    ) || 0;\n\nconst soundDigital =\n    Date.now() - lastlocalSoundTime < 8000\n        ? 1\n        : 0;\n\nconst distance = Number(flow.get(\"archiveA.distance\") || 0);\nconst rawMotion = flow.get(\"archiveA.motion\") || 0;\n\nif (rawMotion === 1) {\n    flow.set(\n        \"archiveA.motionTime\",\n        Date.now()\n    );\n}\n\nconst lastMotionTime =\n    flow.get(\n        \"archiveA.motionTime\"\n    ) || 0;\n\nconst motion =\n    Date.now() - lastMotionTime < 8000\n        ? 1\n        : 0;\n        \nconst roomOccupied = motion === 1;\n\n// Count repeated motion detections\n\nlet motionCount =\n    flow.get(\n        \"archiveA.motionCount\"\n    ) || 0;\n\nconst previousMotion =\n    flow.get(\n        \"archiveA.previousMotion\"\n    ) || 0;\n\n// Count only NEW motion events\n\nif (\n    motion === 1 &&\n    previousMotion === 0\n) {\n    motionCount++;\n}\n\n// Reset when room becomes empty\n\nif (motion === 0) {\n    motionCount = 0;\n}\n\nflow.set(\n    \"archiveA.motionCount\",\n    motionCount\n);\n\nflow.set(\n    \"archiveA.previousMotion\",\n    motion\n);\n\nconst permanentlyOccupied =\n    motionCount >= 3;\n\nlet threatScore = 0;\nlet threatFactors = [];\n\nif (emergency) {\n\n    threatScore += 100;\n\n    threatFactors.push({\n        label:\n            \"Emergency button activated\",\n        points: 100\n    });\n}\n\nconst artifactMoved = distance > 5;\n\nflow.set(\n    \"archiveA.artifactMoved\",\n    artifactMoved\n);\n\nconst OPEN_HOUR = 9;\nconst CLOSE_HOUR = 17;\n\nconst currentHour = new Date().getHours();\n\nconst museumOpen =\n    currentHour >= OPEN_HOUR &&\n    currentHour < CLOSE_HOUR;\n\n// Motion detected\n// Motion handling\n\nif (museumOpen) {\n\n    if (motion === 1) {\n\n        threatFactors.push({\n            label: \"Visitors present in archive\",\n            points: 0\n        });\n    }\n\n} else {\n\n    if (motion === 1) {\n\n        threatScore += 20;\n\n        threatFactors.push({\n            label: \"Movement detected after closing hours\",\n            points: 20\n        });\n    }\n}\n\n// Loud sound\nif (soundDigital === 1) {\n\n    threatFactors.push({\n        label: museumOpen\n            ? \"Sound detected in gallery\"\n            : \"Sound detected after closing hours\",\n\n        points: museumOpen\n            ? 10\n            : 25\n    });\n\n    threatScore += museumOpen\n        ? 10\n        : 25;\n}\n\nconst now = Date.now();\n\n// Store ANY activity in Archive A\n\nif (\n    motion === 1 ||\n    soundDigital === 1\n) {\n    global.set(\n        \"archiveA.lastActivityTime\",\n        now\n    );\n}\n\n// Read latest activity from Archive B\n\nconst archiveBActivityTime =\n    global.get(\n        \"archiveB.lastActivityTime\"\n    ) || 0;\n\n// Correlation check\n\nconst correlatedEvent =\n    (\n        motion === 1 ||\n        soundDigital === 1\n    ) &&\n    (\n        now - archiveBActivityTime < 8000\n    );\n\nif (correlatedEvent) {\n\n    threatScore += 70;\n\n    threatFactors.push({\n        label:\n            \"Cross-archive suspicious activity detected\",\n        points: 50\n    });\n}\n\n// Artifact removed\nif (artifactMoved) {\n    threatScore += 60;\n\n    threatFactors.push({\n        label: \"Artifact displacement detected\",\n        points: 60\n    });\n}\n\n// Environmental monitoring\nif (temperature > 35) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High temperature\",\n        points: 10\n    });\n}\n\nif (humidity > 70) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High humidity\",\n        points: 10\n    });\n}\n\nlet status = \"SAFE\";\n\nif (threatScore >= 70) {\n    status = \"CRITICAL\";\n} else if (threatScore >= 35) {\n    status = \"WARNING\";\n}\n\nflow.set(\n    \"archiveA.artifactMoved\",\n    artifactMoved\n);\n\nmsg.payload = {\n    id: \"A\",\n    archive: \"A\",\n\n    temperature,\n    humidity,\n    soundAnalog,\n    soundDigital,\n    distance,\n    motion,\n    emergency,\n\n    museumOpen,\n    roomOccupied,\n    permanentlyOccupied,\n    correlatedEvent,\n    status,\n    threatScore,\n    threatFactors,\n\n    artifactMoved,\n    doorOpen: false,\n    espOnline: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 320,
+        "wires": [
+            [
+                "e93a7f73bea124a4",
+                "c99129b57e60c52e",
+                "f6740710e22654ca",
+                "6d578421869d9015",
+                "8b38c09c7e8fe481"
+            ]
+        ]
+    },
+    {
+        "id": "e6f05645f2b3f154",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive B API",
+        "url": "/api/archive/B",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 610,
+        "y": 620,
+        "wires": [
+            [
+                "7d4c295609f487fe"
+            ]
+        ]
+    },
+    {
+        "id": "8cc19c6305afec99",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ResponseB",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "7d4c295609f487fe",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive B Data",
+        "func": "const temperature = Number(flow.get(\"archiveB.temperature\") || 0);\nconst humidity = Number(flow.get(\"archiveB.humidity\") || 0);\nconst soundAnalog = Number(flow.get(\"archiveB.soundAnalog\") || 0);\nconst emergency =\n    flow.get(\n        \"emergencyB\"\n    ) || false;\nconst rawSound =\n    flow.get(\n        \"archiveB.soundDigital\"\n    ) || 0;\n\nif (rawSound === 1) {\n    flow.set(\n        \"archiveB.soundTime\",\n        Date.now()\n    );\n}\n\nconst lastlocalSoundTime =\n    flow.get(\n        \"archiveB.soundTime\"\n    ) || 0;\n\nconst soundDigital =\n    Date.now() - lastlocalSoundTime < 8000\n        ? 1\n        : 0;\n        \nconst distance = Number(flow.get(\"archiveB.distance\") || 0);\nconst rawMotion = flow.get(\"archiveB.motion\") || 0;\n\nif (rawMotion === 1) {\n    flow.set(\n        \"archiveB.motionTime\",\n        Date.now()\n    );\n}\n\nconst lastMotionTime =\n    flow.get(\n        \"archiveB.motionTime\"\n    ) || 0;\n\nconst motion =\n    Date.now() - lastMotionTime < 8000\n        ? 1\n        : 0;\n\nconst roomOccupied = motion === 1;\n\n// Count repeated motion detections\n\nlet motionCount =\n    flow.get(\n        \"archiveB.motionCount\"\n    ) || 0;\n\nconst previousMotion =\n    flow.get(\n        \"archiveB.previousMotion\"\n    ) || 0;\n\nif (\n    motion === 1 &&\n    previousMotion === 0\n) {\n    motionCount++;\n}\n\nif (motion === 0) {\n    motionCount = 0;\n}\n\nflow.set(\n    \"archiveB.motionCount\",\n    motionCount\n);\n\nflow.set(\n    \"archiveB.previousMotion\",\n    motion\n);\n\nconst permanentlyOccupied =\n    motionCount >= 3;\n\nlet threatScore = 0;\nlet threatFactors = [];\n\nconst artifactMoved = distance > 5;\n\nflow.set(\n    \"archiveB.artifactMoved\",\n    artifactMoved\n);\n\nconst OPEN_HOUR = 9;\nconst CLOSE_HOUR = 17;\n\nconst currentHour = new Date().getHours();\n\nconst museumOpen =\n    currentHour >= OPEN_HOUR &&\n    currentHour < CLOSE_HOUR;\n\n// Motion detected\n// Motion handling\n\nif (museumOpen) {\n\n    if (motion === 1) {\n\n        threatFactors.push({\n            label: \"Visitors present in archive\",\n            points: 0\n        });\n    }\n\n} else {\n\n    if (motion === 1) {\n\n        threatScore += 20;\n\n        threatFactors.push({\n            label: \"Movement detected after closing hours\",\n            points: 20\n        });\n    }\n}\n\n// Loud sound\nif (soundDigital === 1) {\n\n    threatFactors.push({\n        label: museumOpen\n            ? \"Sound detected in gallery\"\n            : \"Sound detected after closing hours\",\n\n        points: museumOpen\n            ? 10\n            : 25\n    });\n\n    threatScore += museumOpen\n        ? 10\n        : 25;\n}\n\nconst now = Date.now();\n\n// Store any activity happening in Archive B\n\nif (\n    motion === 1 ||\n    soundDigital === 1\n) {\n\n    global.set(\n        \"archiveB.lastActivityTime\",\n        now\n    );\n}\n\n// Get latest activity from Archive A\n\nconst archiveAActivityTime =\n    global.get(\n        \"archiveA.lastActivityTime\"\n    ) || 0;\n\n// Correlation check\n\nconst correlatedEvent =\n\n    (\n        motion === 1 ||\n        soundDigital === 1\n    ) &&\n\n    (\n        now - archiveAActivityTime < 8000\n    );\n\nif (correlatedEvent) {\n\n    threatScore += 70;\n\n    threatFactors.push({\n        label:\n            \"Cross-archive suspicious activity detected\",\n        points: 70\n    });\n}\n\n// Artifact removed\nif (artifactMoved) {\n    threatScore += 60;\n\n    threatFactors.push({\n        label: \"Artifact displacement detected\",\n        points: 60\n    });\n}\n\n// Environmental monitoring\nif (temperature > 35) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High temperature\",\n        points: 10\n    });\n}\n\nif (humidity > 70) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High humidity\",\n        points: 10\n    });\n}\n\n\nif (emergency) {\n\n    threatScore += 100;\n\n    threatFactors.push({\n        label:\n            \"Emergency button activated\",\n        points: 100\n    });\n}\n\nlet status = \"SAFE\";\n\nif (threatScore >= 70) {\n    status = \"CRITICAL\";\n} else if (threatScore >= 35) {\n    status = \"WARNING\";\n}\n\nflow.set(\n    \"archiveB.artifactMoved\",\n    artifactMoved\n);\n\nmsg.payload = {\n    id: \"B\",\n    archive: \"B\",\n\n    temperature,\n    humidity,\n    soundAnalog,\n    soundDigital,\n    distance,\n    motion,\n    emergency,\n\n    museumOpen,\n    roomOccupied,\n    permanentlyOccupied,\n    correlatedEvent,\n    status,\n    threatScore,\n    threatFactors,\n\n    artifactMoved,\n    doorOpen: false,\n    espOnline: true\n};\n\nmsg.payload.emergency = emergency;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 620,
+        "wires": [
+            [
+                "8cc19c6305afec99",
+                "92d12b815917b26a",
+                "f6740710e22654ca",
+                "6d578421869d9015",
+                "8b38c09c7e8fe481"
+            ]
+        ]
+    },
+    {
+        "id": "315e1b4e75e27247",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive C API",
+        "url": "/api/archive/C",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 610,
+        "y": 920,
+        "wires": [
+            [
+                "d559d774afa84266"
+            ]
+        ]
+    },
+    {
+        "id": "2cc9eff442b02cd6",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ResponseC",
+        "statusCode": "",
+        "headers": {},
+        "x": 1030,
+        "y": 920,
+        "wires": []
+    },
+    {
+        "id": "d559d774afa84266",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Archive C Data",
+        "func": "const stored = flow.get(\"galleryCRestricted\");\n\nconst galleryCRestricted = stored ?? true;\n\nconst temperature = Number(flow.get(\"archiveC.temperature\") || 0);\nconst humidity = Number(flow.get(\"archiveC.humidity\") || 0);\nconst soundAnalog = Number(flow.get(\"archiveC.soundAnalog\") || 0);\nconst emergency = flow.get(\"emergencyC\") || false;\n\nconst rawSound =\n    flow.get(\n        \"archiveC.soundDigital\"\n    ) || 0;\n\nif (rawSound === 1) {\n    flow.set(\n        \"archiveC.soundTime\",\n        Date.now()\n    );\n}\n\nconst lastSoundTime =\n    flow.get(\n        \"archiveC.soundTime\"\n    ) || 0;\n\nconst soundDigital =\n    Date.now() - lastSoundTime < 5000\n        ? 1\n        : 0;\n\nconst distance = Number(flow.get(\"archiveC.distance\") || 0);\nconst rawMotion = flow.get(\"archiveC.motion\") || 0;\n\nif (rawMotion === 1) {\n    flow.set(\n        \"archiveC.motionTime\",\n        Date.now()\n    );\n}\n\nconst lastMotionTime =\n    flow.get(\n        \"archiveC.motionTime\"\n    ) || 0;\n\nconst motion =\n    Date.now() - lastMotionTime < 8000\n        ? 1\n        : 0;\nlet threatScore = 0;\nlet threatFactors = [];\n\n// Radar proximity detection\n\nif (distance > 0 && distance <= 100) {\n    threatScore += 20;\n\n    threatFactors.push({\n        label: \"Movement detected near restricted zone\",\n        points: 20\n    });\n}\n\nif (distance > 0 && distance <= 50) {\n    threatScore += 30;\n\n    threatFactors.push({\n        label: \"Suspicious proximity to artifact\",\n        points: 30\n    });\n}\n\nif (distance > 0 && distance <= 20) {\n    threatScore += 30;\n\n    threatFactors.push({\n        label: \"Restricted area intrusion\",\n        points: 30\n    });\n}\n\n// PIR\n\nif (motion === 1) {\n    threatScore += 20;\n\n    threatFactors.push({\n        label: \"Motion sensor activated\",\n        points: 20\n    });\n}\n\n// Sound\n\nif (soundDigital === 1) {\n    threatScore += 20;\n\n    threatFactors.push({\n        label: \"Abnormal sound level\",\n        points: 20\n    });\n}\n\n// Environment\n\nif (temperature > 35) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High temperature\",\n        points: 10\n    });\n}\n\nif (humidity > 80) {\n    threatScore += 10;\n\n    threatFactors.push({\n        label: \"High humidity\",\n        points: 10\n    });\n}\n\nif (emergency) {\n\n    threatScore += 100;\n\n    threatFactors.push({\n        label:\n            \"Emergency button activated\",\n        points: 100\n    });\n}\n\nlet status = \"SAFE\";\n\nif (threatScore >= 70) {\n    status = \"CRITICAL\";\n} else if (threatScore >= 35) {\n    status = \"WARNING\";\n}\n\nif (!galleryCRestricted) {\n    threatScore = Math.max(\n        0,\n        threatScore - 30\n    );\n}\n\nmsg.payload = {\n    id: \"C\",\n    archive: \"C\",\n\n    temperature,\n    humidity,\n    soundAnalog,\n    soundDigital,\n    distance,\n    motion,\n    emergency,\n\n    status,\n    threatScore,\n    threatFactors,\n    accessMode: galleryCRestricted\n    ? \"RESTRICTED\"\n    : \"PUBLIC\",\n\n    artifactMoved: false,\n    doorOpen: false,\n    espOnline: true\n};\n\nmsg.payload.emergency = emergency;\n\nflow.set(\"archiveC\", msg.payload);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 920,
+        "wires": [
+            [
+                "2cc9eff442b02cd6",
+                "5838d7f046d17de9",
+                "f6740710e22654ca",
+                "6d578421869d9015",
+                "8b38c09c7e8fe481"
+            ]
+        ]
+    },
+    {
+        "id": "dc03208deb34556e",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Restricted status",
+        "url": "/api/archiveC/mode",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 620,
+        "y": 1000,
+        "wires": [
+            [
+                "f2a97a6599d737e4"
+            ]
+        ]
+    },
+    {
+        "id": "f2a97a6599d737e4",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Set Archive C Mode",
+        "func": "const restricted = msg.payload.restricted;\n\nflow.set(\"galleryCRestricted\", restricted);\n\nnode.warn(\"POST stored = \" + flow.get(\"galleryCRestricted\"));\n\nmsg.payload = {\n    success: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 980,
+        "y": 1000,
+        "wires": [
+            [
+                "98de97c26289d78f"
+            ]
+        ]
+    },
+    {
+        "id": "98de97c26289d78f",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ResponseCmode",
+        "statusCode": "",
+        "headers": {},
+        "x": 1210,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "f1e608a354177519",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Dist1",
+        "topic": "Samsungmdc/sensor/distance",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0500df882c1fc1be",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 100,
+        "wires": [
+            [
+                "cfde342319301ca0"
+            ]
+        ]
+    },
+    {
+        "id": "37ae55583d3ff6a5",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Dist2",
+        "topic": "Samsungmdc/sensor/distance2",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "0500df882c1fc1be",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 250,
+        "y": 140,
+        "wires": [
+            [
+                "cfde342319301ca0"
+            ]
+        ]
+    },
+    {
+        "id": "cfde342319301ca0",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Visitor Count",
+        "func": "const THRESHOLD = 50;   // cm\n\n// Current distances\nlet d1 = context.get(\"d1\") || 100;\nlet d2 = context.get(\"d2\") || 100;\n\n// Current count\nlet count = context.get(\"count\") || 0;\n\n// Current state\nlet state = context.get(\"state\") || \"IDLE\";\n\n// Identify which sensor updated\nif (msg.topic === \"Samsungmdc/sensor/distance\") {\n    d1 = Number(msg.payload);\n    context.set(\"d1\", d1);\n}\n\nif (msg.topic === \"Samsungmdc/sensor/distance2\") {\n    d2 = Number(msg.payload);\n    context.set(\"d2\", d2);\n}\n\n// --------------------\n// State Machine\n// --------------------\n\nswitch(state){\n\n    case \"IDLE\":\n\n        if(d1 < THRESHOLD){\n            state = \"S1_FIRST\";\n        }\n\n        else if(d2 < THRESHOLD){\n            state = \"S2_FIRST\";\n        }\n\n        break;\n\n    case \"S1_FIRST\":\n\n        if(d2 < THRESHOLD){\n            count++;\n            state = \"WAIT_CLEAR\";\n        }\n\n        break;\n\n    case \"S2_FIRST\":\n\n        if(d1 < THRESHOLD){\n            count--;\n\n            if(count < 0)\n                count = 0;\n\n            state = \"WAIT_CLEAR\";\n        }\n\n        break;\n\n    case \"WAIT_CLEAR\":\n\n        if(d1 > THRESHOLD && d2 > THRESHOLD){\n            state = \"IDLE\";\n        }\n\n        break;\n}\n\ncontext.set(\"state\", state);\ncontext.set(\"count\", count);\n\nflow.set(\"visitorCount\", count);\n\nmsg.payload = count;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 120,
+        "wires": [
+            [
+                "b6466e600f609fd1"
+            ]
+        ]
+    },
+    {
+        "id": "7967dea123175ce1",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Visitor Count",
+        "url": "/api/visitors",
+        "method": "get",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 890,
+        "y": 120,
+        "wires": [
+            [
+                "1c8a2ee07079b8df"
+            ]
+        ]
+    },
+    {
+        "id": "94902c60b39470a4",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 1230,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "1c8a2ee07079b8df",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "VisCount",
+        "func": "const count = flow.get(\"visitorCount\") || 0;\n\nmsg.payload = {\n    visitorCount: count\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 120,
+        "wires": [
+            [
+                "94902c60b39470a4"
+            ]
+        ]
+    },
+    {
+        "id": "b6466e600f609fd1",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 660,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "c99129b57e60c52e",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-A",
+        "func": "const status = msg.payload.status;\n\nconst occupied = msg.payload.permanentlyOccupied;\n\nconst emergency = msg.payload.emergency;\n\nconst lockdown =\n    flow.get(\"museumLockdown\") || false;\n\nlet commands = [];\n\n// Reset everything\n\ncommands.push(\"off1\");\ncommands.push(\"off2\");\ncommands.push(\"off3\");\ncommands.push(\"off4\");\n\n// Highest priority:\n// Lockdown OR emergency button\n\nif (lockdown || emergency) {\n\n    commands.push(\"on1\");\n\n} else {\n\n    // Normal status LEDs\n\n    if (status === \"SAFE\") {\n\n        commands.push(\"on3\");\n\n    }\n\n    else if (status === \"WARNING\") {\n\n        commands.push(\"on2\");\n\n    }\n\n    else if (status === \"CRITICAL\") {\n\n        commands.push(\"on1\");\n    }\n\n    // White occupancy LED\n\n    if (occupied) {\n\n        commands.push(\"on4\");\n    }\n}\n\n\nmsg.payload = commands.join(\",\");\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 240,
+        "wires": [
+            [
+                "bcce9aa3d27dd469"
+            ]
+        ]
+    },
+    {
+        "id": "92d12b815917b26a",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-B",
+        "func": "const status = msg.payload.status;\n\nconst occupied = msg.payload.permanentlyOccupied;\n\nconst emergency = msg.payload.emergency;\n\nconst lockdown =\n    flow.get(\"museumLockdown\") || false;\n\nlet commands = [];\n\n// Reset everything\n\ncommands.push(\"off1\");\ncommands.push(\"off2\");\ncommands.push(\"off3\");\ncommands.push(\"off4\");\n\n// Highest priority:\n// Lockdown OR emergency button\n\nif (lockdown || emergency) {\n\n    commands.push(\"on1\");\n\n} else {\n\n    // Normal status LEDs\n\n    if (status === \"SAFE\") {\n\n        commands.push(\"on3\");\n\n    }\n\n    else if (status === \"WARNING\") {\n\n        commands.push(\"on2\");\n\n    }\n\n    else if (status === \"CRITICAL\") {\n\n        commands.push(\"on1\");\n    }\n\n    // White occupancy LED\n\n    if (occupied) {\n\n        commands.push(\"on4\");\n    }\n}\n\nmsg.payload = commands.join(\",\");\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 560,
+        "wires": [
+            [
+                "e019ce34c8653050"
+            ]
+        ]
+    },
+    {
+        "id": "5838d7f046d17de9",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-C",
+        "func": "const status = msg.payload.status;\n\nconst restricted =\n    msg.payload.accessMode ===\n    \"RESTRICTED\";\n\nconst motion =\n    msg.payload.motion;\n\nconst distance =\n    Number(\n        msg.payload.distance || 999\n    );\n\nconst emergency =\n    msg.payload.emergency;\n\nconst lockdown =\n    flow.get(\n        \"museumLockdown\"\n    ) || false;\n\nlet commands = [];\n\n// Reset everything first\n\ncommands.push(\"off1\");\ncommands.push(\"off2\");\ncommands.push(\"off3\");\ncommands.push(\"off4\");\n\n// ===================================\n// HIGHEST PRIORITY\n// Emergency / Lockdown\n// ===================================\n\nif (\n    emergency ||\n    lockdown\n) {\n\n    commands.push(\"on1\");\n\n}\n\n// ===================================\n// RESTRICTED MODE\n// ===================================\n\nelse if (restricted) {\n\n    if (\n        distance > 0 &&\n        distance <= 10\n    ) {\n\n        // CRITICAL\n\n        commands.push(\"on1\");\n\n    }\n\n    else if (\n        distance > 10 &&\n        distance <= 20\n    ) {\n\n        // WARNING\n\n        commands.push(\"on2\");\n\n    }\n\n    else if (\n        distance > 20 &&\n        distance <= 50\n    ) {\n\n        // Visitor nearby\n\n        commands.push(\"on4\");\n\n    }\n\n    else {\n\n        // Safe\n\n        commands.push(\"on3\");\n    }\n}\n\n// ===================================\n// STANDARD MODE\n// ===================================\n\nelse {\n\n    if (\n        status ===\n        \"CRITICAL\"\n    ) {\n\n        commands.push(\"on1\");\n\n    }\n\n    else if (\n        status ===\n        \"WARNING\"\n    ) {\n\n        commands.push(\"on2\");\n\n    }\n\n    else {\n\n        commands.push(\"on3\");\n    }\n\n    if (motion) {\n\n        commands.push(\"on4\");\n    }\n}\n\nnode.warn(msg.payload);\nmsg.payload =\n    commands.join(\",\");\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1050,
+        "y": 860,
+        "wires": [
+            [
+                "996dba1efb3d6f17"
+            ]
+        ]
+    },
+    {
+        "id": "e019ce34c8653050",
+        "type": "mqtt out",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-B",
+        "topic": "ArticolR2/LED",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "1129f87a23a23441",
+        "x": 1190,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "996dba1efb3d6f17",
+        "type": "mqtt out",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-C",
+        "topic": "ArticolR3/LED",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2c2a31fafd435ec",
+        "x": 1190,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "bcce9aa3d27dd469",
+        "type": "mqtt out",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LED-A",
+        "topic": "ArticolR1/LED",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "b943d7a555e3b5ce",
+        "x": 1190,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "407182c70cd757c6",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ButtonA",
+        "topic": "ArticolR1/Emergency",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "b943d7a555e3b5ce",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1330,
+        "y": 240,
+        "wires": [
+            [
+                "aa2bfe6507928021"
+            ]
+        ]
+    },
+    {
+        "id": "0e91abe152ae2056",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ButtonB",
+        "topic": "ArticolR2/Emergency",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "1129f87a23a23441",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1330,
+        "y": 560,
+        "wires": [
+            [
+                "8aa41eab6677e872"
+            ]
+        ]
+    },
+    {
+        "id": "b27edac767771b13",
+        "type": "mqtt in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ButtonC",
+        "topic": "ArticolR3/Emergency",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "c2c2a31fafd435ec",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 1340,
+        "y": 860,
+        "wires": [
+            [
+                "e45561cd719f125c"
+            ]
+        ]
+    },
+    {
+        "id": "92bcc9141619e2cc",
+        "type": "mqtt out",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Buzzer",
+        "topic": "Articol/Buzzer",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2c2a31fafd435ec",
+        "x": 1980,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "f6740710e22654ca",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Buzzer",
+        "func": "let buzz = false;\n\n// Emergency buttons\n\nconst emergencyA =\n    flow.get(\"emergencyA\") || false;\n\nconst emergencyB =\n    flow.get(\"emergencyB\") || false;\n\nconst emergencyC =\n    flow.get(\"emergencyC\") || false;\n\n// Dashboard lockdown\n\nconst lockdown =\n    flow.get(\"museumLockdown\") || false;\n\n// Current archive state\n\nconst status =\n    msg.payload.status || \"SAFE\";\n\nconst accessMode =\n    msg.payload.accessMode || \"\";\n\nconst distance =\n    Number(\n        msg.payload.distance || 999\n    );\n\n// Rule 1\n\nif (\n    emergencyA ||\n    emergencyB ||\n    emergencyC\n) {\n    buzz = true;\n}\n\n// Rule 2\n\nif (lockdown) {\n    buzz = true;\n}\n\n// Rule 3\n\nif (status === \"CRITICAL\") {\n    buzz = true;\n}\n\n// Rule 4\n\nif (\n    accessMode === \"RESTRICTED\" &&\n    distance <= 20\n) {\n    buzz = true;\n}\n\nmsg.payload =\n    buzz ? \"ON\" : \"OFF\";\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1800,
+        "y": 560,
+        "wires": [
+            [
+                "92bcc9141619e2cc"
+            ]
+        ]
+    },
+    {
+        "id": "95767b9fbfed4e79",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "lockdown",
+        "url": "/api/lockdown",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 880,
+        "y": 160,
+        "wires": [
+            [
+                "25ac68d90fd9a56c"
+            ]
+        ]
+    },
+    {
+        "id": "25ac68d90fd9a56c",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "lockdown",
+        "func": "const enabled = msg.payload.enabled;\n\nflow.set(\"museumLockdown\", enabled);\n\nif (enabled) {\n\n    flow.set(\n        \"alertAcknowledged\",\n        false\n    );\n\n    flow.set(\n        \"criticalSource\",\n        \"Museum Lockdown\"\n    );\n}\n\nmsg.payload = {\n    success: true,\n    lockdown: enabled\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1100,
+        "y": 160,
+        "wires": [
+            [
+                "be53833844ee6f13",
+                "6d578421869d9015",
+                "8b38c09c7e8fe481"
+            ]
+        ]
+    },
+    {
+        "id": "be53833844ee6f13",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "lockdown resp",
+        "statusCode": "",
+        "headers": {},
+        "x": 1320,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "31e06611a6e2cacb",
+        "type": "http in",
+        "z": "15bfd3e0a0c981f8",
+        "name": "acknowledge",
+        "url": "/api/acknowledge",
+        "method": "post",
+        "upload": false,
+        "skipBodyParsing": false,
+        "swaggerDoc": "",
+        "x": 1510,
+        "y": 1000,
+        "wires": [
+            [
+                "8fcbed33588a9d78"
+            ]
+        ]
+    },
+    {
+        "id": "8fcbed33588a9d78",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "acknowledge",
+        "func": "const emergencyA =\n    flow.get(\"emergencyA\") || false;\n\nconst emergencyB =\n    flow.get(\"emergencyB\") || false;\n\nconst emergencyC =\n    flow.get(\"emergencyC\") || false;\n\nconst archiveAArtifact =\n    flow.get(\n        \"archiveA.artifactMoved\"\n    ) || false;\n\nconst archiveBArtifact =\n    flow.get(\n        \"archiveB.artifactMoved\"\n    ) || false;\n\n// Cannot acknowledge if artifact is still displaced\n\nif (\n    archiveAArtifact ||\n    archiveBArtifact\n) {\n\n    msg.statusCode = 400;\n\n    msg.payload = {\n        success: false,\n        message:\n            \"Artifact not restored\"\n    };\n\n    return msg;\n}\n\n// Cannot acknowledge if emergency button still active\n\nif (\n    emergencyA ||\n    emergencyB ||\n    emergencyC\n) {\n\n    msg.statusCode = 400;\n\n    msg.payload = {\n        success: false,\n        message:\n            \"Emergency button still active\"\n    };\n\n    return msg;\n}\n\n// Reset everything\n\nflow.set(\n    \"museumLockdown\",\n    false\n);\n\nflow.set(\n    \"emergencyA\",\n    false\n);\n\nflow.set(\n    \"emergencyB\",\n    false\n);\n\nflow.set(\n    \"emergencyC\",\n    false\n);\n\nflow.set(\n    \"alertAcknowledged\",\n    true\n);\n\nflow.set(\n    \"criticalSource\",\n    null\n);\n\nmsg.payload = {\n    success: true\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1730,
+        "y": 1000,
+        "wires": [
+            [
+                "fa7677d6b587e3ee"
+            ]
+        ]
+    },
+    {
+        "id": "fa7677d6b587e3ee",
+        "type": "http response",
+        "z": "15bfd3e0a0c981f8",
+        "name": "ack resp",
+        "statusCode": "",
+        "headers": {},
+        "x": 1920,
+        "y": 1000,
+        "wires": []
+    },
+    {
+        "id": "aa2bfe6507928021",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Emergency A",
+        "func": "const emergency = Number(msg.payload) === 1;\n\nflow.set(\n    \"emergencyA\",\n    emergency\n);\n\nif (emergency) {\n\n    flow.set(\n        \"alertAcknowledged\",\n        false\n    );\n}\n\nmsg.payload = {\n    emergency\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1490,
+        "y": 240,
+        "wires": [
+            [
+                "6d578421869d9015",
+                "8b38c09c7e8fe481",
+                "288373085c56e855"
+            ]
+        ]
+    },
+    {
+        "id": "8aa41eab6677e872",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Emergency B",
+        "func": "const emergency = Number(msg.payload) === 1;\n\nflow.set(\n    \"emergencyB\",\n    emergency\n);\n\nif (emergency) {\n\n    flow.set(\n        \"alertAcknowledged\",\n        false\n    );\n}\n\nmsg.payload = {\n    emergency\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1520,
+        "y": 560,
+        "wires": [
+            [
+                "6d578421869d9015",
+                "8b38c09c7e8fe481",
+                "288373085c56e855"
+            ]
+        ]
+    },
+    {
+        "id": "e45561cd719f125c",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Emergency C",
+        "func": "const emergency = Number(msg.payload) === 1;\n\nflow.set(\n    \"emergencyC\",\n    emergency\n);\n\nif (emergency) {\n\n    flow.set(\n        \"alertAcknowledged\",\n        false\n    );\n}\n\nmsg.payload = {\n    emergency\n};\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1520,
+        "y": 860,
+        "wires": [
+            [
+                "6d578421869d9015",
+                "8b38c09c7e8fe481",
+                "288373085c56e855"
+            ]
+        ]
+    },
+    {
+        "id": "6875291ad0c59345",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "buzz",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "ON",
+        "payloadType": "str",
+        "x": 1790,
+        "y": 660,
+        "wires": [
+            [
+                "92bcc9141619e2cc"
+            ]
+        ]
+    },
+    {
+        "id": "f8eb5fe4222c8816",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Alert",
+        "func": "node.warn({\n    emergencyA: flow.get(\"emergencyA\"),\n    emergencyB: flow.get(\"emergencyB\"),\n    emergencyC: flow.get(\"emergencyC\"),\n    lockdown: flow.get(\"museumLockdown\")\n});\n\n\nconst emergencyA = flow.get(\"emergencyA\") || false;\nconst emergencyB = flow.get(\"emergencyB\") || false;\nconst emergencyC = flow.get(\"emergencyC\") || false;\n\nconst lockdown = flow.get(\"museumLockdown\") || false;\n\nconst archiveA = flow.get(\"archiveA.status\");\nconst archiveB = flow.get(\"archiveB.status\");\nconst archiveC = flow.get(\"archiveC.status\");\n\nlet subject = \"\";\nlet body = \"\";\n\nif (lockdown) {\n\n    subject = \"🚨 ARTICOL MUSEUM LOCKDOWN\";\n\n    body =\n        \"Museum lockdown has been activated.\";\n\n}\n\nelse if (emergencyA) {\n\n    subject =\n        \"🚨 Emergency in Archive A\";\n\n    body =\n        \"Emergency button activated in Archive A.\";\n\n}\n\nelse if (emergencyB) {\n\n    subject =\n        \"🚨 Emergency in Archive B\";\n\n    body =\n        \"Emergency button activated in Archive B.\";\n\n}\n\nelse if (emergencyC) {\n\n    subject =\n        \"🚨 Emergency in Archive C\";\n\n    body =\n        \"Emergency button activated in Archive C.\";\n\n}\n\nelse if (archiveA === \"CRITICAL\") {\n\n    subject =\n        \"⚠️ Critical Alert - Archive A\";\n\n    body =\n        \"Archive A entered CRITICAL state.\";\n\n}\n\nelse if (archiveB === \"CRITICAL\") {\n\n    subject =\n        \"⚠️ Critical Alert - Archive B\";\n\n    body =\n        \"Archive B entered CRITICAL state.\";\n\n}\n\nelse if (archiveC === \"CRITICAL\") {\n\n    subject =\n        \"⚠️ Critical Alert - Archive C\";\n\n    body =\n        \"Archive C entered CRITICAL state.\";\n\n}\n\nelse {\n\n    return null;\n\n}\n\n//msg.topic = subject;\n\n//msg.payload = body;\n\nnode.warn({\n    topic: subject,\n    payload: body\n});\n\nmsg.topic = subject;\nmsg.payload = body;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1890,
+        "y": 380,
+        "wires": [
+            [
+                "e771e57c1d5c6d33"
+            ]
+        ]
+    },
+    {
+        "id": "6d578421869d9015",
+        "type": "trigger",
+        "z": "15bfd3e0a0c981f8",
+        "name": "Trigger",
+        "op1": "1",
+        "op2": "",
+        "op1type": "str",
+        "op2type": "nul",
+        "duration": "2",
+        "extend": true,
+        "overrideDelay": false,
+        "units": "min",
+        "reset": "",
+        "bytopic": "all",
+        "topic": "topic",
+        "outputs": 1,
+        "x": 1740,
+        "y": 380,
+        "wires": [
+            [
+                "f8eb5fe4222c8816",
+                "ebde5619c458be9b"
+            ]
+        ]
+    },
+    {
+        "id": "e771e57c1d5c6d33",
+        "type": "e-mail",
+        "z": "15bfd3e0a0c981f8",
+        "server": "smtp.gmail.com",
+        "port": "465",
+        "authtype": "BASIC",
+        "saslformat": true,
+        "token": "oauth2Response.access_token",
+        "secure": true,
+        "tls": true,
+        "name": "itsrazaaa@gmail.com",
+        "dname": "Email Alert",
+        "x": 1970,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "e61e5bc947895401",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "test data",
+        "func": "flow.set(\"archiveA.status\", \"SAFE\");\nflow.set(\"archiveB.status\", \"SAFE\");\nflow.set(\"archiveC.status\", \"SAFE\");\n\nflow.set(\"emergencyA\", false);\nflow.set(\"emergencyB\", false);\nflow.set(\"emergencyC\", false);\n\nflow.set(\"museumLockdown\", false);\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1840,
+        "y": 300,
+        "wires": [
+            [
+                "f8eb5fe4222c8816"
+            ]
+        ]
+    },
+    {
+        "id": "36587ec29945d256",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "test",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "str",
+        "x": 1710,
+        "y": 300,
+        "wires": [
+            [
+                "e61e5bc947895401"
+            ]
+        ]
+    },
+    {
+        "id": "8b38c09c7e8fe481",
+        "type": "function",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LCD data",
+        "func": "const lockdown =\n    flow.get(\"museumLockdown\") || false;\n\nconst emergencyA =\n    flow.get(\"emergencyA\") || false;\n\nconst emergencyB =\n    flow.get(\"emergencyB\") || false;\n\nconst emergencyC =\n    flow.get(\"emergencyC\") || false;\n\nconst archiveA =\n    flow.get(\"archiveA\") || {};\n\nconst archiveB =\n    flow.get(\"archiveB\") || {};\n\nconst archiveC =\n    flow.get(\"archiveC\") || {};\n\nconst restricted =\n    archiveC.accessMode === \"RESTRICTED\";\n\nlet line1 =\n    \"Welcome to ARTICOL\";\n\nlet line2 =\n    restricted\n        ? \"Arc-C: CLOSED\"\n        : \"Arc-C: OPEN\";\n\n\n// Highest priority\n\nif (lockdown) {\n\n    line1 =\n        \"MUSEUM\";\n\n    line2 =\n        \"LOCKDOWN\";\n}\n\n\n// Emergency buttons\n\nelse if (emergencyA) {\n\n    line1 =\n        \"ARCHIVE A\";\n\n    line2 =\n        \"EMERGENCY\";\n}\n\nelse if (emergencyB) {\n\n    line1 =\n        \"ARCHIVE B\";\n\n    line2 =\n        \"EMERGENCY\";\n}\n\nelse if (emergencyC) {\n\n    line1 =\n        \"ARCHIVE C\";\n\n    line2 =\n        \"EMERGENCY\";\n}\n\n\n// Critical alerts\n\nelse if (\n    archiveA.status ===\n    \"CRITICAL\"\n) {\n\n    line1 =\n        \"ARCHIVE A\";\n\n    line2 =\n        \"CRITICAL\";\n}\n\nelse if (\n    archiveB.status ===\n    \"CRITICAL\"\n) {\n\n    line1 =\n        \"ARCHIVE B\";\n\n    line2 =\n        \"CRITICAL\";\n}\n\nelse if (\n    archiveC.status ===\n    \"CRITICAL\"\n) {\n\n    line1 =\n        \"ARCHIVE C\";\n\n    line2 =\n        \"CRITICAL\";\n}\n\nmsg.payload = {\n\n    welcome: {\n        message: line1,\n        line2: line2\n    }\n    \n};\n\n\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": 0,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1740,
+        "y": 780,
+        "wires": [
+            [
+                "23434094a361332a",
+                "347cbab4c883c574"
+            ]
+        ]
+    },
+    {
+        "id": "23434094a361332a",
+        "type": "mqtt out",
+        "z": "15bfd3e0a0c981f8",
+        "name": "LCD",
+        "topic": "Articol3/LCD",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "c2c2a31fafd435ec",
+        "x": 1990,
+        "y": 760,
+        "wires": []
+    },
+    {
+        "id": "ebde5619c458be9b",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1860,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "347cbab4c883c574",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 3",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1960,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "5f05907fedb93e6b",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{   \"welcome\": {     \"message\": \"HELLO\",     \"line2\": \"WORLD\"   } }",
+        "payloadType": "json",
+        "x": 1750,
+        "y": 840,
+        "wires": [
+            [
+                "23434094a361332a"
+            ]
+        ]
+    },
+    {
+        "id": "288373085c56e855",
+        "type": "debug",
+        "z": "15bfd3e0a0c981f8",
+        "name": "debug 4",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1700,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "d0937af7d7d49e80",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "button",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "0",
+        "payloadType": "str",
+        "x": 1510,
+        "y": 180,
+        "wires": [
+            [
+                "aa2bfe6507928021"
+            ]
+        ]
+    },
+    {
+        "id": "00c0e1df61628472",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{   \"status\": \"SAFE\",   \"permanentlyOccupied\": true,   \"emergency\": false }",
+        "payloadType": "json",
+        "x": 810,
+        "y": 240,
+        "wires": [
+            [
+                "c99129b57e60c52e"
+            ]
+        ]
+    },
+    {
+        "id": "df107d6be89bb71b",
+        "type": "inject",
+        "z": "15bfd3e0a0c981f8",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{   \"status\":\"SAFE\",   \"accessMode\":\"PUBLIC\",   \"motion\":0,   \"distance\":100,   \"emergency\":false }",
+        "payloadType": "json",
+        "x": 850,
+        "y": 860,
+        "wires": [
+            [
+                "5838d7f046d17de9"
+            ]
+        ]
+    },
+    {
+        "id": "b943d7a555e3b5ce",
+        "type": "mqtt-broker",
+        "name": "Articol1",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "1129f87a23a23441",
+        "type": "mqtt-broker",
+        "name": "Articol2",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "c2c2a31fafd435ec",
+        "type": "mqtt-broker",
+        "name": "Articol3",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "0500df882c1fc1be",
+        "type": "mqtt-broker",
+        "name": "Visitor Count",
+        "broker": "broker.emqx.io",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "608d58f68c575ead",
+        "type": "global-config",
+        "env": [],
+        "modules": {
+            "node-red-node-email": "5.2.5"
+        }
+    }
+]
